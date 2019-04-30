@@ -11,10 +11,10 @@ Download this repository and the [applauncher2 of IMAGINARY](IMAGINARY/applaunch
 Copy the files `lalalab-apps/showmemusic.config.yml` and `lalalab-apps/beatbox.config.yml` to the folder `applauncher2/config/`. Put the folder `lalalab-apps` into `applauncher2`. This could be done through the commands:
 
 ```
-git clone https://github.com/CindyJS/lalalab-apps.git
-git clone https://github.com/IMAGINARY/applauncher2.git
-cp lalalab-apps/showmemusic.config.yml applauncher2/config/
-cp lalalab-apps/beatbox.config.yml applauncher2/config/
+git clone https://github.com/CindyJS/lalalab-apps.git &&
+git clone https://github.com/IMAGINARY/applauncher2.git &&
+cp lalalab-apps/showmemusic.config.yml applauncher2/cfg/ &&
+cp lalalab-apps/beatbox.config.yml applauncher2/cfg/ &&
 mv lalalab-apps applauncher2
 
 ```
