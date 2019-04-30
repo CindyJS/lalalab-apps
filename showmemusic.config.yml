@@ -1,7 +1,7 @@
 #
 # Default language
 #
-lang: en
+lang: de
 
 #
 # This title will be shown on top of the menu if no logo image is specified.
@@ -11,6 +11,7 @@ lang: en
 #
 title:
   en: Show Me Music
+  de: Zeig mir Musik
 
 #
 # Logo image to show on top of the menu.
@@ -81,7 +82,7 @@ infoApp: https://imaginary.github.io/cindyjs-apps/info
 # more than one local variant of the same language.
 # Also only enable languages for which translations are available.
 #
-langMenuShow: false
+langMenuShow: true
 
 #
 # Indicate which languages to show if the language switcher menu is shown
@@ -89,3 +90,4 @@ langMenuShow: false
 #
 langMenuItems:
   - en
+  - de

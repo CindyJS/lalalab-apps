@@ -1,7 +1,7 @@
 #
 # Default language
 #
-lang: en
+lang: de
 
 #
 # This title will be shown on top of the menu if no logo image is specified.
@@ -10,7 +10,8 @@ lang: en
 # a default fallback title.
 #
 title:
-  en: BeatBox
+  en: Beat Box
+  de: Beat Box
 
 #
 # Logo image to show on top of the menu.
@@ -80,7 +81,7 @@ iconsPerRow: [3, 2]
 # more than one local variant of the same language.
 # Also only enable languages for which translations are available.
 #
-langMenuShow: false
+langMenuShow: true
 
 #
 # Indicate which languages to show if the language switcher menu is shown
@@ -88,3 +89,4 @@ langMenuShow: false
 #
 langMenuItems:
   - en
+  - de
