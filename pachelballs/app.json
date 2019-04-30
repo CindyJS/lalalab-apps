@@ -2,8 +2,6 @@
   "id": "pachelballs",
   "version": "1.0.0",
   "main": "app.html",
-  "width": 1400,
-  "height": 800,
   "name": {
     "en": "Pachelballs"
   },

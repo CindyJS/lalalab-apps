@@ -2,8 +2,6 @@
   "id": "shepardtone",
   "version": "1.0.0",
   "main": "app.html",
-  "width": 1100,
-  "height": 546,
   "name": {
     "en": "Shepard Tone"
   },
