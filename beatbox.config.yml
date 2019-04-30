@@ -34,7 +34,7 @@ title:
 # Available themes: default, blue, green.
 # See more info about defining new themes in the README.md file.
 #
-# theme: blue
+theme: ../../themes/lalalab-noheader
 
 #
 # List of apps to load in the menu

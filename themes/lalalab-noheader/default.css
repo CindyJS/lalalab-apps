@@ -1,0 +1,23 @@
+/*************************************************/
+/* This forces apps to be displayed fullscreen    */
+/*************************************************/
+
+body {
+  background-color: #441030; }
+  body.mode-app {
+    background-color: #aa1030;
+}
+
+.appContainer {
+  height: 90vh !important;
+  /*bottom: 0 !important;*/
+}
+
+.appContainer iframe {
+    transform: none !important;
+}
+
+.util-bar {
+    z-index: 2000 !important;
+}
+/*# sourceMappingURL=default.css.map */
