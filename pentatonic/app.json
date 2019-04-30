@@ -1,0 +1,16 @@
+{
+  "id": "pentatonic",
+  "version": "1.4.0",
+  "main": "app.html",
+  "width": 1200,
+  "height": 600,
+  "name": {
+    "en": "Pentatonic Scales",
+    "de": "Pentatonische Skalen"
+  },
+  "description": {
+    "en": "",
+    "de": "",
+    "es": ""
+  }
+}

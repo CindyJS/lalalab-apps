@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+    <title>Construction.cdy</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #CSConsole {
+            background-color: #FAFAFA;
+            border-top: 1px solid #333333;
+            bottom: 0px;
+            height: 200px;
+            overflow-y: scroll;
+            position: fixed;
+            width: 100%;
+        }
+    </style>
+  <script type="text/javascript" src="../common-music/js/Cindy.js"></script>
+  <script type="text/javascript" src="../common/js/Cindy3D.js"></script>
+
+  <script type="text/javascript" src="../common/js/midi/MIDI.js"></script>
+  <script type="text/javascript" src="../common/js/midi-plugin.js"></script>
+  <script type="text/javascript" src="../common/sf/MusyngKite/acoustic_grand_piano-mp3.js"></script>
+  <script type="text/javascript" src="../common/sf/MusyngKite/vibraphone-mp3.js"></script>
+  <script type="text/javascript" src="../common/sf/MusyngKite/acoustic_bass-mp3.js"></script>
+  <script type="text/javascript" src="../common/sf/MusyngKite/acoustic_guitar_nylon-mp3.js"></script>
+  <script type="text/javascript" src="../common/otherjs/i18n4js-1.3.0.min.js"></script>
+
+
+
+<script id="csinit" type="text/x-cindyscript">
+R1.xy=(16,2);
+s5=[];
+apply(1..5,i,
+apply(1..5--[i],j,
+apply(1..5--[i,j],k,
+apply(1..5--[i,j,k],l,
+apply(1..5--[i,j,k,l],m,
+s5=s5++[[i,j,k,l,m]];
+)))));
+
+println(length(s5));
+scale=(1,3,5,8,10);  
+start=1;
+use("Cindy3D");
+drawpts=apply(1..5,(cos(#*72°),sin(#*72°)));
+
+posall=(8.8,5.2);
+posfund=(10,5.2);
+possel=(11.2,5.2);
+
+
+
+instrument(33, channel->0); // Acoustic Bass
+instrument(12, channel->1); // Vibraphone
+instrument(1, channel->2); // Acoustic Grand Piano
+instrument(25, channel->3); // Acoustic Guitar (nylon)
+instrument(80, channel->4); // Occarina
+instrument(9, channel->5); // Celesta
+loadinstruments([33, 1, 25, 12]);
+posplay=(8.55,.65);
+pospause=(5,2);
+posstop=(28,1);
+
+pos1=(21,2)+(cos(0°),sin(0°))*2;
+pos2=(21,2)+(cos(60°),sin(60°))*2;
+pos3=(21,2)+(cos(120°),sin(120°))*2;
+pos4=(21,2)+(cos(180°),sin(180°))*2;
+pos5=(21,2)+(cos(240°),sin(240°))*2;
+pos6=(21,2)+(cos(300°),sin(300°))*2;
+
+pos1=(9.5,1);
+pos2=(10.5,0.3);
+pos3=(11.5,1);
+pos4=(9.5,.3);
+pos5=(10.5,1);
+pos6=(11.5,.3);
+
+trigger=zerovector(120);
+
+play=false;
+paused=false;
+swall=false;
+swfund=true;
+swsel=false;
+
+scale=(1,3,5,8,10);  
+
+play():=(
+  play=true;
+if(!paused,
+  ot=seconds();
+  t=seconds();
+  tone=-12;
+playanimation();
+  );
+
+    paused=false;
+
+);
+stop():=(
+  play=false;
+  paused=false;
+  midiposition=0;
+  mp=0;
+  omp=0;
+
+);
+pause():=(
+  paused=true;
+);
+next=2;
+
+m(x):=mod(x-1,6)+1;
+r(x):=mod(x-1,12)+1;
+
+
+prs=pairs(all);
+prs1=(select(prs,|#_1,#_2|<.7&|#_1,#_2|>.6));
+prs2=(select(prs,|#_1,#_2|>.3&|#_1,#_2|<.4));
+
+
+all=[];
+
+apply(-12..12,i,
+apply(-12..12,j,
+apply(-12..12,k,
+all=all++[[[i,j,k],[i,j+4,k+8]]];
+)));
+dir(note):=exp(i*note*30°);
+
+chordcolor(chord):=(
+  vec=gauss(dir(chord_1)+dir(chord_2)+dir(chord_3));
+  w=arctan2(vec);
+  co=hue(w/(2*pi));
+  w=1-|vec|/3;
+  co*(1-w)+(1,1,1)*w;
+);
+
+
+chordsize(chord):=(
+  vec=gauss(dir(chord_1)+dir(chord_2)+dir(chord_3));
+  w=arctan2(vec);
+  co=hue(w/(2*pi));
+  1-|vec|/3;
+);
+
+type(chord):=sort([mod(chord_1,12),mod(chord_2,12),mod(chord_3,12)]);
+
+mapdown(chord):=set([mod(chord_1,12),mod(chord_2,12),mod(chord_3,12)]);
+classes=apply(all,mapdown(#_2));
+
+types=set(apply(all,type(#_2)));
+println(length(all));
+println(length(types));
+
+unison=select(all,length(mapdown(#_2))==1);
+println(apply(all_(1..20),(#_2)));
+
+representants= select(all,p=#_1;max([p_1-p_2,p_2-p_3,p_3-p_1])<5&sum(#_1)<7&sum(#_1)>-7;);
+selected=select(representants,chordsize(#_2)>.8);
+prs=pairs(selected);
+prs=select(prs,|#_1_1,#_2_1|<1.1);
+println(length(representants));
+
+
+playpos=(0,0,0);
+createshowset():=(
+currenttype=type(playpos+(0,4,8));
+showset=select(representants,type(#_2)==currenttype);
+);
+createshowset();
+mo1():=(playpos=playpos+(1,0,0);createshowset());
+mo2():=(playpos=playpos+(0,-1,0);createshowset());
+mo3():=(playpos=playpos+(0,0,1);createshowset());
+mo4():=(playpos=playpos+(-1,0,0);createshowset());
+mo5():=(playpos=playpos+(0,1,0);createshowset());
+mo6():=(playpos=playpos+(0,0,-1);createshowset());
+inited3d=false;
+notenames=("$C$","$C\sharp$","$D$","$E\flat$","$E$","$F$","$F\sharp$","$G$","$G\sharp$","$A$","$B\flat$","$H$");
+</script>
+<script id="csmousedown" type="text/x-cindyscript">
+
+
+if(|mouse().xy,posplay|<.2,if(!play,play(),stop()));
+//if(|mouse().xy,pospause|<1,pause());
+//if(|mouse().xy,posstop|<1,stop());
+if(|mouse().xy,posall|<.4,swall=!swall);
+if(|mouse().xy,possel|<.4,swsel=!swsel);
+if(|mouse().xy,posfund|<.4,swfund=!swfund);
+if(|mouse().xy,pos1|<.3,mo1());
+if(|mouse().xy,pos2|<.3,mo2());
+if(|mouse().xy,pos3|<.3,mo3());
+if(|mouse().xy,pos4|<.3,mo4());
+if(|mouse().xy,pos5|<.3,mo5());
+if(|mouse().xy,pos6|<.3,mo6());
+
+
+
+</script>
+<script id="csdraw" type="text/x-cindyscript">
+
+
+
+draw((16,0),(16,4),color->(0,0,0));
+R1.y=max(0,min(R1.y,4));
+R1.x=16;
+par1=R1.y/4;
+par1=.2;
+no=(1,1,1)/|(1,1,1)|;
+selected=select(representants,abs(#_1-no*(#_1*no))<par1*6);
+prs=pairs(selected);
+prs=select(prs,|#_1_1,#_2_1|<1.1);
+drawimage(pos1,"up",scale->.1);
+drawimage(pos2,"down",scale->.1);
+drawimage(pos3,"up",scale->.1);
+drawimage(pos4,"down",scale->.1);
+drawimage(pos5,"up",scale->.1);
+drawimage(pos6,"down",scale->.1);
+
+
+begin3d();
+//fieldofview3d(1);
+    Cam = [0, 0, -20];
+
+  if(!inited3d,
+    lookat3d(Cam, [0, 0, 0], [1,0,0]);
+    fieldofview3d(20°);
+    inited3d=true;
+    );
+if(swfund,
+draw3d((4,0,-4)+(2,2,2),(4,0,-4)-(2,2,2),size->1,color->(1,1,1));
+draw3d((-4,4,0)+(2,2,2),(-4,4,0)-(2,2,2),size->1,color->(1,1,1));
+draw3d((0,-4,4)+(2,2,2),(0,-4,4)-(2,2,2),size->1,color->(1,1,1));
+draw3d((-4,4,0)+(2,2,2),(0,-4,4)+(2,2,2),size->1,color->(1,1,1));
+draw3d((4,0,-4)+(2,2,2),(-4,4,0)+(2,2,2),size->1,color->(1,1,1));
+draw3d((0,-4,4)+(2,2,2),(4,0,-4)+(2,2,2),size->1,color->(1,1,1));
+draw3d((-4,4,0)-(2,2,2),(0,-4,4)-(2,2,2),size->1,color->(1,1,1));
+draw3d((4,0,-4)-(2,2,2),(-4,4,0)-(2,2,2),size->1,color->(1,1,1));
+draw3d((0,-4,4)-(2,2,2),(4,0,-4)-(2,2,2),size->1,color->(1,1,1));
+);
+if(swall,apply(all,draw3d(#_1,size->1  ,color->(.5,.5,.5))));
+//apply(representants,draw3d(#_1,color->chordcolor(#_2),size->(chordsize(#_2)^3*5+3))*if(swsel,.3,1));
+if(swfund,apply(representants,draw3d(#_1,color->chordcolor(#_2),size->(chordsize(#_2)^3*5+3)*if(swsel,.3,1))));
+
+if(swsel,apply(prs,draw3d(#_1_1,#_2_1,color->chordcolor(1,1,1))));
+
+if(swsel,apply(selected,draw3d(#_1,color->chordcolor(#_2),size->chordsize(#_2)^3*5+3)));
+//apply(unison,draw3d(#_1,color->chordcolor(#_2),size->4));
+background3d((0,0,0));
+apply(showset,draw3d(#_1,size->10));
+
+end3d();
+
+t=seconds();
+
+//ot=t;
+s=.5;
+
+
+drawimage(posall+(-s,-s),posall+(s,-s),"all",alpha->if(swall,1,.4));
+drawimage(posfund+(-s,-s),posfund+(s,-s),"fund",alpha->if(swfund,1,.4));
+drawimage(possel+(-s,-s),possel+(s,-s),"sel",alpha->if(swsel,1,.4));
+
+drawpoly([posall+(-s,-s),posall+(s,-s),posall+(s,s),posall+(-s,s)],color->(1,1,1),size->if(swall,2,.4));
+drawpoly([posfund+(-s,-s),posfund+(s,-s),posfund+(s,s),posfund+(-s,s)],color->(1,1,1),size->if(swfund,2,.4));
+drawpoly([possel+(-s,-s),possel+(s,-s),possel+(s,s),possel+(-s,s)],color->(1,1,1),size->if(swsel,2,.4));
+
+
+s=.7;
+
+if(play,
+    drawimage(posplay+(-s/2,-s/2),posplay+(s/2,-s/2),"stop");
+   ,
+    drawimage(posplay+(-s/2,-s/2),posplay+(s/2,-s/2),"play");
+
+   ) ;
+
+
+scale=currenttype;
+t=seconds();
+if(play,
+ if(floor(ot*next)!=floor(t*next),
+
+//   fullrange=flatten(apply(-2..2,i,apply((1..12)--scale,#+12*i)));
+
+//RANDOMWALK
+
+   fullrange=flatten(apply(-2..2,i,apply(scale,#+12*i)));
+   fullranges=sort(fullrange,|#-tone|)_[1,2,2,3,3,4,5]; 
+   tone=fullranges_(randominteger(7)+1);
+
+
+//UpArpeggio
+/*
+   fullrange=flatten(apply(-3..3,i,apply(scale,#+12*i)));
+   fullranges=sort(select(fullrange,t,t>tone),|(#-tone)|)_[1]; 
+   tone=fullranges_1;
+   if(tone>36,tone=-24);
+*/
+   playtone(60+tone,channel->2);
+   trigger_(tone+60)=1;
+   next=10/(randominteger(2)+1);
+next=12;
+   oldtone=tone;
+   );
+);
+ot=t;
+//drawtext((9,4),currenttype);
+gsave();
+translate((0,2.07));
+scale(0.09);
+rotate(90°);
+w=[1,0,2,0,3,4,0,5,0,6,0,7];
+b=[0,1.45,0,2.55,0,0,4.45,0,5.5,0,6.55,0];
+br=9/7/2;
+trigger=trigger*.7;
+apply(9..96,i,
+   al=trigger_(i+1+11);
+
+   k=mod(i,12);
+   j=i-k;
+   ww=w_(k+1);
+   if(ww!=0,
+     class=mod(i,12);
+     pos=(j*.75-30+ww*9/7,-4);
+     fillpoly([pos+(-br,0),pos+(br,0),pos+(br,4),pos+(-br,4)],color->(1,1,1)*(.6+.4*al)+
+     (0,0,.4)*if(
+         class==currenttype_1 %
+         class==currenttype_2 %
+         class==currenttype_3 
+         ,1,0); 
+
+     )
+   );
+
+);
+
+apply(9..96,i,
+   k=mod(i,12);
+   j=i-k;
+   ww=w_(k+1);
+   if(ww!=0,
+     pos=(j*.75-30+ww*9/7,-4);
+     drawpoly([pos+(-br,0),pos+(br,0),pos+(br,4),pos+(-br,4)],color->(1,1,1)*.3)
+   );
+
+);
+
+
+apply(9..96,i,
+   al=trigger_(i+1+11);
+
+   k=mod(i,12);
+   j=i-k;
+   bb=b_(k+1);
+
+   if(bb!=0,
+     class=mod(i,12);
+     pos=(j*.75-30+bb*9/7,-2.5);
+     fillpoly([pos+(-br/2,0),pos+(br/2,0),pos+(br/2,2.5),pos+(-br/2,2.5)],
+     color->(1,1,1)*(.1+.6*al)+
+     (0.3,0.3,.9)*if(
+         class==currenttype_1 %
+         class==currenttype_2 %
+         class==currenttype_3 
+         ,1,0); 
+         )
+   );
+);
+
+
+
+apply(9..96,i,
+   k=mod(i,12);
+   j=i-k;
+   bb=b_(k+1);
+   if(bb!=0,
+     pos=(j*.75-30+bb*9/7,-2.5);
+     drawpoly([pos+(-br/2,0),pos+(br/2,0),pos+(br/2,2.5),pos+(-br/2,2.5)],color->(1,1,1)*.3)
+   );
+);
+
+grestore();
+
+
+drawcircle((10,3),1.3,color->(1,1,1));
+apply(0..11,i,
+w=30°*i;
+draw((10,3)+(cos(w),sin(w))*1.3,color->(1,1,1)*.5)
+);
+n1=mod(-playpos_1+3,12);
+n2=mod(-playpos_2+11,12);
+n3=mod(-playpos_3+7,12);
+
+w=30°*n1;
+draw((10,3)+(cos(w),sin(w))*1.3,color->(1,1,1),size->10);
+w=30°*n2;
+draw((10,3)+(cos(w),sin(w))*1.3,color->(1,1,1),size->10);
+w=30°*n3;
+draw((10,3)+(cos(w),sin(w))*1.3,color->(1,1,1),size->10);
+drawtext((pos1+pos4)/2+(0,-.1),align->"center",notenames_(mod(playpos_1,12)+1),color->(1,1,1),size->25);
+drawtext((pos2+pos5)/2+(0,-.1),align->"center",notenames_(mod(4+playpos_2,12)+1),color->(1,1,1),size->25);
+drawtext((pos3+pos6)/2+(0,-.1),align->"center",notenames_(mod(8+playpos_3,12)+1),color->(1,1,1),size->25);
+
+if(n1==n2,draw((10,3)+(cos(30°*n1),sin(30°*n1))*1.3,color->(1,1,1),size->13););
+if(n1==n3,draw((10,3)+(cos(30°*n1),sin(30°*n1))*1.3,color->(1,1,1),size->13););
+if(n3==n2,draw((10,3)+(cos(30°*n3),sin(30°*n3))*1.3,color->(1,1,1),size->13););
+if(n3==n2 &n2==n1,draw((10,3)+(cos(30°*n3),sin(30°*n3))*1.3,color->(1,1,1),size->16););
+</script>
+    <script type="text/javascript">
+var cdy = CindyJS({
+  scripts: "cs*",
+  defaultAppearance: {
+    dimDependent: 0.7,
+    fontFamily: "sans-serif",
+    lineSize: 1,
+    pointSize: 5.0,
+    textsize: 12.0
+  },
+  angleUnit: "°",
+  ports: [{
+    id: "CSCanvas",
+    width: 1200,
+    height: 600,
+    transform: [{visibleRect: [0, 0, 12, 6]}],
+    background: "rgb(20,20,20)"
+  }],
+  geometry: [
+
+      {name: "R1", type: "Free", pos: [20,2], color: [1,1,1], size: 7.0,pinned:false}
+
+   ],   
+      images:{
+
+      "play":"../common-music/img/Play.png",
+      "stop":"../common-music/img/Stop.png",
+      "pause":"../common-music/img/Pause.png",
+      "all":"All.png",
+      "sel":"Selection.png",
+      "fund":"Fundamental.png",
+      "down":"Down.png",
+      "up":"Up.png",
+
+    },
+  csconsole: false,
+  cinderella: {build: 1901, version: [2, 9, 1901]}
+});
+    </script>
+</head>
+<body>
+    <div style="position:absolute; top:0px; left:0px;"  id="CSCanvas">
+    </div><canvas style="position:absolute; top:0px; left:100px;" id="Cindy3D" width="700" height="600"></canvas>
+</body>
+</html>

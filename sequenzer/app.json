@@ -1,0 +1,22 @@
+{
+  "id": "sequenzer",
+  "version": "1.4.0",
+  "main": "app.html",
+  "width": 1750,
+  "height": 800,
+  "name": {
+    "en": "Sequencer",
+    "de": "Sequenzer",
+    "es": "Secuenciador",
+    "fr": "Le séquenceur",
+    "ru": "Секвенсор",
+    "ro": "Secvențier",
+    "it": "Sequenziatore",
+    "pt-br": "Sequenciador"
+  },
+  "description": {
+    "en": "",
+    "de": "",
+    "es": ""
+  }
+}

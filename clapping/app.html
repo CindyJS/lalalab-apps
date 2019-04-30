@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Sequencer</title>
+  <link rel="stylesheet" href="../common/css/default.css" media="screen" type="text/css">
+  <script type="text/javascript" src="../common/js/Cindy.js"></script>
+  <script type="text/javascript" src="../common/js/midi/MIDI.js"></script>
+  <script type="text/javascript" src="../common/js/midi-plugin.js"></script>
+  <script type="text/javascript" src="../common/sf/MusyngKite/drumset-mp3.js"></script>
+  <script type="text/javascript" src="../common/otherjs/i18n4js-1.3.0.min.js"></script>
+
+<script id="cssimulationstart" type="text/x-cindyscript">
+t0=seconds();
+t=0;
+ot=0;
+
+
+//-t0;
+
+seco=seconds();
+
+
+isrunning=true;
+
+;
+</script>
+<script id="csdraw" type="text/x-cindyscript">
+
+//t=simulationtime()*.2;
+
+//err(inspect(curkernel()));
+set_16_3=44;
+set_17_3=44;
+set_18_3=44;
+set_19_3=44;
+
+
+layer(0);
+clrscr();
+
+A.x=16;
+B.x=20;
+A.y=min(8,max(A.y,0));
+B.y=min(8,max(B.y,0));
+vols=(A.y/8,B.y/8);
+draw((16,0),(16,8),color->(1,1,1)*.7,size->2);
+draw((20,0),(20,8),color->(1,1,1)*.7,size->2);
+
+if(isrunning,
+  drawimage((23,-10),"stop",scale->1),
+  drawimage((23,-10),"play",scale->1)
+);
+forall(1..15,i=(#-1)/14*18+1;
+   drawimage((23,i-8),set_#_1,scale->1.8*set_#_2/2.8);
+);
+
+note=apply([I1,I2,I3,I4,I5],
+  #.y=round((#.y+7)/18*14)*18/14-7;
+  if(#.y<-7,#.y=-7);
+  if(#.y>11,#.y=11);
+
+  draw(#,(22.5,#.y),color->(1,1,1)*.5,dashtype->3,size->2);
+   draw(#,color->#.color,size->10);
+  set_(round((#.y+7)*15/19+1))_3;
+
+
+) ;
+
+
+note=[61,60,0,0,0];
+note=[25,26,0,0,0];
+if(claps,note=[25,26,0,0,0],note=[77,76,0,0,0]);
+
+if(isrunning,
+  t=-(seco-seconds())*.4*|T2,T1|+t;
+);
+if(!isrunning,
+  t=0;
+);
+//-t0;
+
+seco=seconds();
+
+drawtext(T1+(0.3,0.3),international("TEMPO"),size->16,color->(1,1,1)*.6);
+drawtext((-9,12),international("HINT_1"),size->22,color->(1,1,1)*.6);
+drawtext((13,12),international("HINT_2"),size->22,color->(1,1,1)*.6);
+//drawtext((-9,-10),international("HINT_1"),size->22,color->(1,1,1)*.6);
+//drawtext((-9,-11.5),international("HINT_2"),size->22,color->(1,1,1)*.6);
+
+f(A,B,C):=(
+   q=round(1+15*|A,B|/|A,C|);
+   drawtext(B+(0.3,0.2),q,size->16,color->(1,1,1)*.6);
+   q
+);
+n=[f(P,U,Q),f(R,V,S),f(N,W,O),f(L,T,M)];
+n=[12,12,12,12];
+q=[(6,5)];
+rad=5;
+in=5;
+inst=[F,H];
+F.xy=q_1+(0,rad+.7);
+vec=H-q_1;
+vec=vec/|vec|*(rad+1.5);
+
+
+
+ang=arctan2(vec_1,vec_2);
+ang=round(12*ang/(2*pi))/12*2*pi;
+
+shift=mod(ang/(2*pi)*12-3,12);
+
+npos=(rad+2)*(cos(ang),sin(ang));
+draw(F,q_1+(0,rad+.1),arrow->true,arrowsize->1,arrowtype->"full",size->3,color->(.5,.5,1));
+draw(q_1+npos,q_1+npos*.73,arrow->true,arrowsize->1.5,arrowtype->"full",size->3,color->(.5,1,.5));
+
+H.xy=q_1+npos;
+
+
+vol=[0,.5,1];
+siz=[6,11,11];
+col=[(.8,0,0),(0,.8,0),(0,0,0.8),(.9,.7,0)];
+
+forall(1..1,i,
+  fillcircle(q_i,rad,color->(col_i*.3+(1,1,1)*.7)*.8);
+);
+
+p(w):=(sin(w),cos(w));
+forall(1..1,i,
+ del=1/n_i*360°;
+ forall(1..(n_i),j,
+
+   w=t*90°+j*del;
+   ow=ot*90°+j*del;
+   seg=(q_i+p(w)*1.5,q_i+p(w)*(rad-.5));
+   oseg=(q_i+p(ow)*1.5,q_i+p(ow)*(rad-.5));
+   ll=(1,1);
+   forall(1..2,in,
+     b1=(area(q_i,inst_in,seg_1)<0);
+     b2=(area(q_i,inst_in,oseg_1)<0);
+             ll_in=1;
+
+     if(b1&!b2&isrunning,if(|inst_in,q_i|<(rad+3),             
+        playtone(note_in,channel->9,velocity->(.8+random()*.2)^2*vols_in*2.2*vol_(m_i_j)*((|inst_in,q_i|-1)/4)*.5);
+        (inst_in).size=siz_(m_i_j);
+       );
+     );
+   );
+
+   al=0.1;
+   if(m_i_j==2,al=1);
+   if(m_i_j==3,al=1);
+   draw(seg,size->9,alpha->al,color->col_i*.3)
+ );
+);
+
+apply(inst,(#.size=#.size-1);if(#.size<5,#.size=5));
+   siz1=(inst_1).size;
+   siz2=(inst_2).size;
+ot=t;
+
+stretch=1.3;
+//drawtext((0,0),t,color->(1,1,1));
+
+apply(-11..36,
+
+not=m_1_(12-mod(#,12));
+pos=#*stretch-(mod(t,4)*stretch/4*12);
+al=1;
+
+if(pos<0,al=max(0,1+pos/10));
+if(pos>15,al=max(0,1-((pos-15)/10)));
+if(#*stretch+(t*stretch/3)<0&t<4,al=0);
+
+if(not>1,
+ drawimage((pos-.65,-7),(pos+.65,-7),"achtel",alpha->al);
+ );
+ if(not==1,
+ drawimage((pos-.25,-7.3),(pos+.25,-7.3),"pause",alpha->al);
+ );
+);
+draw((0,-9),(0,-8),color->(.5,.5,1),size->(siz1-4)*.6+2,arrow->true);
+draw((stretch*shift,-3.5),(stretch*shift,-4.5),color->(.5,1,.5),size->(siz2-5)*.6+2,arrow->true);
+
+apply(-2..2,
+tpos=-((mod(t,4)*stretch/4*12));
+ttpos=tpos+12*stretch*#;
+al=1;
+
+if(ttpos<0,al=max(0,1+ttpos/10));
+if(ttpos>15,al=max(0,1-((ttpos-15)/10)));
+draw((ttpos-.6,-7.2),(ttpos-.6,-5.2),color->(1,1,1),alpha->al;);
+);
+;
+
+drawimage((-8,0),(-6,0),"claves",alpha->if(claps,0.2,1));
+drawimage((-8,4),(-6,4),"claps",alpha->if(!claps,0.2,1));
+
+
+</script>
+<script id="cstick" type="text/x-cindyscript">
+a
+
+
+
+
+
+;
+</script>
+<script id="csmouseup" type="text/x-cindyscript">
+if(!isrunning,
+forall(1..4,i,
+ del=1/n_i*360°;
+ forall(1..(n_i),j,
+   w=t*90°+j*del;
+   seg=(q_i+p(w)*1.5,q_i+p(w)*4);
+   pos=mouse().xy;
+   if(|seg_1,pos|+|seg_2,pos|<2.6,
+     m_i_j=mod(m_i_j,3)+1;
+     if(m_i_j==2,m_i_j=3);
+   );
+ );
+);
+);
+if(|mouse().xy,(-7,1)|<1.5,claps=false);
+if(|mouse().xy,(-7,5)|<1.5,claps=true);
+if(claps,note=[25,26,0,0,0],note=[61,60,0,0,0]);
+Text0.val=m;
+
+
+if(|mouse().xy,(23,-10)|<2,
+  if(isrunning,
+    pauseanimation();
+    isrunning=false;
+  ,
+    playanimation();isrunning=true;
+  );
+
+)
+
+;
+</script>
+<script id="csinit" type="text/x-cindyscript">
+/*
+test={"a":"Hallo","b":"What","c":1,"d":[1,2,3]};
+println(test.a);
+println(test.b);
+println(test.c);
+println(test.d);
+*/
+  claps=true;
+
+  A.xy=(20,6);
+  B.xy=(16,6);
+  A.color=(.5,.5,1);
+  q=[(6,5)];
+rad=5;
+H.xy=q_1+(0,.5);
+
+use("midi");
+//instrument(33, channel->0); // Acoustic Bass
+//instrument(1, channel->2); // Acoustic Grand Piano
+//instrument(25, channel->3); // Acoustic Guitar (nylon)
+instrument(128, channel->9); // Vibraphone
+loadinstruments([128]);
+t0=seconds();
+seco=seconds();
+t=0;
+ot=0;
+t=0;
+
+m=[
+reverse([3,3,3,1,3,3,1,3,1,3,3,1])
+];
+Text0.val=m;
+//31,Klangholz,56,60,62,67,68,70,77
+table=[35,40,42,48,69,53,54,61,34,64,76,75,87,85,81,89,35,35,35];
+table=[35,38,42,48,69,53,54,61,68,64,76,75,87,85,81,89,35,35,35];
+
+set=[
+  ["b1",1,table_1,1],
+  ["b2",1,table_2,1],
+  ["b3",1,table_3,1],
+  ["b4",1,table_4,1],
+  ["b6",1,table_5,1],
+  ["b5",1,table_6,1],
+  ["b7",1,table_7,1],
+  ["b9",1,table_8,1],
+  ["b10",1,table_9,1],
+  ["b8",1,table_10,1],
+  ["b12",1,table_11,1],
+  ["b12",.7,table_12,1],
+  ["b13",1,table_13,1],
+  ["b11",1,table_14,1],
+  ["b14",1.5,table_15,1],
+  ["b14",1.5,table_16,1],
+  ["b14",1.5,table_17,1],
+  ["b14",1.5,table_18,1],
+  ["b14",1.5,table_19,1]
+
+];
+
+isrunning=false;
+T.y=9;
+;
+</script>
+<script id="cssimulationstop" type="text/x-cindyscript">
+isrunning=false;
+seco=seconds();
+t=0;
+t0=seconds();
+t=0;
+ot=0;
+;
+</script>
+<script type="text/javascript">
+
+  var ready = createCindy.waitFor('i18n');
+  var translations = {};
+  IMAGINARY.i18n.init().then(function(lang){
+    translations[lang] = IMAGINARY.i18n.getStrings();
+    ready();
+  }).catch(function(err){
+    console.log("Error loading translation: " + err);
+    throw err;
+  });
+
+  createCindy({
+    scripts: "cs*",
+    defaultAppearance: {
+      dimDependent: 0.7,
+      fontFamily: "sans-serif",
+      lineSize: 1,
+      pointSize: 5.0,
+      textsize: 12.0
+    },
+    angleUnit: "°",
+    geometry: [
+      {name: "A", type: "Free", pos: [6,6], color: [1,1,1], pinned: false,size:6,narrow:80},
+      {name: "B", type: "Free", pos: [6,6], color: [.5,1.5], pinned: false,size:6,narrow:80},
+   //   {name: "C", type: "Free", pos: [4.0, 3.111111111111111, 0.4444444444444444], color: [0.0, 0.0, 0.0], pinned: true},
+     // {name: "D", type: "Free", pos: [4.0, 0.08510638297872342, 0.5319148936170213], color: [1.0, 1.0, 0.0]},
+     // {name: "E", type: "Free", pos: [4.0, -0.7272727272727273, -1.2987012987012987], color: [0.0, 0.0, 1.0]},
+      {name: "F", type: "Free", pos: [-3.4351145038167936, -4.0, -0.38167938931297707], color: [.5,.5,1],narrow:80},
+     // {name: "G", type: "Free", pos: [1.1385767790262171, -4.0, -0.37453183520599254], color: [1.0, 0.498, 0.0]},
+      {name: "H", type: "Free", pos: [4.0, 2.344827586206897, 1.7241379310344827], color: [.5,1,.5],size:7,narrow:80},
+   //   {name: "K", type: "Free", pos: [1.7142857142857142, -4.0, -0.5714285714285714], color: [0.0, 0.0, 0.0], pinned: true},
+          {name: "T1", type: "Free", pos: [15,-10], color: [0.0, 0.0, 0.0], pinned: true, size: 2.0,narrow:80},
+      {name: "P8", type: "Free", pos: [21,-10], color: [0.0, 0.0, 0.0], pinned: true, size: 2.0, printname: "$P_{8}$",narrow:80},
+      {name: "l", type: "Segment", color: [0.502, 0.502, 0.502], args: ["T1", "P8"], size: 2},
+      {name: "T2", type: "PointOnSegment", pos: [4.0, -1.867219936381949, 0.20746888182021656], color: [1.0, 1.0, 1.0], args: ["l"], textsize: 14.0, printname: "Tempo",narrow:80},
+
+      //   {name: "Text0", type: "Text", color: [0.0, 0.0, 0.0], visible: false, text: "[[3,2,3,1,1,3,2,2,2,1,2,2,1,1,1,1],[3,3,3,2,3,1,1,1,1,3,2,1,1,1,1,1],[1,2,3,1,1,1,1,1,2,2,2,2,2,3,2,2],[1,2,3,2,3,1,2,3,1,1,1,1,2,3,1,1]]", dock: {corner: "UL", offset: [10.0, -60.0]}},
+      //   {name: "Text1", type: "Text", color: [0.502, 0.502, 0.502], text: "Striche können durch Anklicken verändert werden", textsize: 14.0, textbold: true, textitalics: true, dock: {corner: "LL", offset: [42.0, 20.0]}},
+      //  {name: "Text2", type: "Text", pos: [4.0, 3.7678571428571423, -0.4464285714285714], color: [1,1,1], text: "Farbige Punkte sind Instrumente", textsize: 20.0, textbold: true, textitalics: true}
+    ],
+    animation: {autoplay: false, controls: false, speed: 1.0515463917525774},
+    autoplay: false,
+    animcontrols: false,
+    ports: [{
+      id: "CSCanvas",
+      width: 1750,
+      height: 800,
+      transform: [{visibleRect: [-10.7, 14, 25.42, -12]}],
+      grid: 1.0,
+      background: "rgb(29,47,66)"
+    }],
+    cinderella: {build: 1872, version: [2, 9, 1872]},
+    images: {
+      stop:"../common/img/Stop.png",
+      play:"../common/img/Play.png",
+      achtel:"Achtel.png",
+      pause:"Pause.png",
+      claves:"Claves.png",
+      claps:"Claps.png",
+
+     },
+    language: IMAGINARY.i18n.getLang(),
+    translations: translations
+  });
+
+</script>
+</head>
+<body>
+  <div id="CSCanvas"></div>
+</body>
+</html>

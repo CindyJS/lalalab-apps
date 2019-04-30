@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+    <title>09_SoundSpirale.cdy</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #CSConsole {
+            background-color: #FAFAFA;
+            border-top: 1px solid #333333;
+            bottom: 0px;
+            height: 200px;
+            overflow-y: scroll;
+            position: fixed;
+            width: 100%;
+        }
+    </style>
+<script type="text/javascript" src="../common/js/Cindy.js"></script>
+<script id="csdraw" type="text/x-cindyscript">
+
+del=|C,E|/|C,D|*2-1;
+si=if(del>0,1,-1);
+  time=seconds()-timestamp;
+  If(F.x<1,F.x=1);
+  If(F.x>5,F.x=5);
+  if(mover()==F,G.x=F.x+diff);
+  if(G.x<F.x+.3,G.x=F.x+.3);
+  if(G.x>F.x+2,G.x=F.x+2);
+  diff=G.x-F.x;
+  G.y=0;
+B.angle=B.angle-time*del*3;
+w=B.angle/360°;
+w=floor(w*12)/12;
+pow=1-w;
+
+F.y=0;
+timestamp=seconds();
+
+
+g(x):=exp(-((x-F.x)/|G,F|/1.8)^2*10);
+
+mid=(.8,1.7);
+connect(
+  apply(1..1200,i,
+  ww=360°/12*i/10;
+
+  mid+(sin(ww),cos(ww))*(.2+i/2000*1.8);
+),color->(1,1,1)*.4
+);
+
+bww=360°-B.angle;
+//if(si==1,bww=B.angle);
+
+apply(1..120,i,
+  ww=mod(360°/12*i,360°);
+  println(ww);
+  x=i*2.3;
+  am=g((x/40));
+  ang=si*(-ww+bww);
+
+  if(ang<0,ang=ang+360°);
+  draw(mid+(sin(ww),cos(ww))*(.2+i/200*1.8),alpha->am,color->(.5,1,.5),size->3+8*exp(-ang*3));
+);
+
+ww=-B.angle;
+draw(mid,mid+(sin(ww),cos(ww))*1.5,size->2,color->(1,1,1));
+
+
+
+
+ergf=apply(0..200,
+xx=#/200*8.1-1;
+(xx,g(xx));
+);
+fillpoly(ergf,color->(1,1,1)*.4);
+
+
+f(x):=log(x);
+
+
+
+
+l=1..200;
+mask=apply(1..200,
+x=log(#)/log(2);
+erg=0;
+
+if(x~=round(x),erg=1);
+if((x-log(3)/log(2))~=round(x-log(3)/log(2)),erg=1);
+//if((x-log(5)/log(2))~=round(x-log(5)/log(2)),erg=.3);
+//if((x-log(7)/log(2))~=round(x-log(5)/log(2)),erg=.1);
+
+erg;
+);
+
+
+freq(x):=l_x*2^pow;;
+li=1..length(l);
+vals=apply(li,x=freq(#);g(f(x))*mask_#);
+
+apply(li,x=freq(#);
+  if(vals_#!=0,
+    draw((f(x),0),(f(x),vals_#),color->(.5,.5,1),size->3);
+);
+//  draw((f(x),0),color->(1,0,0));
+);
+plot(g(x),color->(1,1,1)*.9,size->3);
+
+//  playsin(10*2^pow,harmonics->vals,amp->.1*|C,E|,line->1);
+
+
+if(wo!=w,
+//if(true,
+ 
+collect=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+/*
+if(wo!=w,
+  playsin(10*2^pow,harmonics->vals,amp->.05,damp->10,line->1);
+);
+*/
+j=1;
+
+apply(1..length(vals),i,
+  fr=10*2^pow*i;
+  am=vals_i;
+  if(am>0.001&fr>20&fr<8000,
+     collect_j=[fr,am];
+     j=j+1;
+  )
+);
+wo=w;
+if(inited& on,
+apply(1..20,i,
+   if(collect_i!=0,
+       playsin(collect_i_1,amp->collect_i_2,damp->10,line->i);
+
+   );
+);
+);
+);
+;
+drawimage((0,-.7),(.4,-.7),if(on,"on","off"));
+
+
+draw(F,G,color->(1,1,1),size->2);
+draw(F,F-(G-F),color->(1,1,1),size->2)
+
+
+</script>
+
+<script id="csmousedown" type="text/x-cindyscript">
+  if(|mouse().xy,(.2,-.5)|<.2,on=!on;inited=true;
+
+
+apply(1..20,i,
+playsin(0,harmonics->[0],line->i,duration->0));
+  );
+
+//if(on,playanimation(),stopanimation());
+
+</script>
+<script id="cstick" type="text/x-cindyscript">
+a;
+</script>
+<script id="csinit" type="text/x-cindyscript">
+//playanimation();
+timestamp=seconds();
+
+inited=false;
+
+  on=false;
+</script>
+    <script type="text/javascript">
+var cdy = CindyJS({
+  scripts: "cs*",
+  defaultAppearance: {
+    dimDependent: 0.7,
+    fontFamily: "sans-serif",
+    lineSize: 1,
+    pointSize: 5.0,
+    textsize: 12.0
+  },
+  angleUnit: "°",
+  geometry: [
+    {name: "A", type: "Free", pos: [4.0, 2.10946262983011, 1.0577845323185895], color: [1.0, 0.0, 0.0], labeled: true,visible:false},
+    {name: "C0", type: "CircleByRadius", pos: {xx: 0.05606549172594702, yy: 0.05606549172594702, zz: 1.0, xy: 0.0, xz: -0.4240220197060768, yz: 0.2236146511987639}, color: [0.0, 0.0, 1.0], radius: 0.6635611953693494, args: ["A"], printname: "$C_{0}$",visible:false},
+    {name: "B", type: "PointOnCircle", pos: [4.0, {r: 2.6178764101136953, i: -1.0871368596208357E-15}, {r: 0.9992792729820651, i: -2.693262007383571E-16}], color: [1.0, 0.0, 0.0], args: ["C0"], labeled: true,visible:false},
+    {name: "", type: "OtherPointOnCircle", pos: [4.0, {r: 1.5378139394951917, i: 7.658686572069803E-16}, {r: 1.1235664921599893, i: 2.913473259549462E-16}], color: [1.0, 1.0, 1.0], args: ["B"], pinned: true, size: 0.0,visible:false},
+    {name: "C", type: "Free", pos: [2,-.5], color: [1.0, 0.0, 0.0], labeled: true,visible:false},
+    {name: "D", type: "Free", pos: [5,-.5], color: [1.0, 0.0, 0.0], labeled: true,visible:false},
+    {name: "a", type: "Segment", color: [1,1,1], args: ["C", "D"], labeled: false,visible:true},
+    {name: "E", type: "PointOnSegment", pos: [3,-.5], color: [1,.5,.5], args: ["a"], labeled: false,visible:true},
+    {name: "F", type: "Free", pos: [4.0, 0.0, 1.2531540989980168], color: [1.0, 1.0, 1.0], labeled: false,size:7},
+    {name: "G", type: "Free", pos: [5, 0.0, 1.2531540989980168], color: [1.0, 1.0, 1.0], labeled: false}
+
+
+  ],
+
+  images:{on:"../common/speakerOn.png", off:"../common/speakerOff.png"},
+  autoplay: true,
+
+  ports: [{
+    id: "CSCanvas",
+    width: 1100,
+    height: 546,
+    transform: [{visibleRect: [-1.001355493998153, 3.064754693751923, 7.130864881501999, -1.0533739612188364]}],
+    axes: false,
+    background: "rgb(30,30,30)"
+  }],
+  csconsole: false,
+  cinderella: {build: 1901, version: [2, 9, 1901]}
+});
+    </script>
+</head>
+<body>
+    <div id="CSCanvas"></div>
+</body>
+</html>

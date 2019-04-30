@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+    <title>Construction.cdy</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #CSConsole {
+            background-color: #FAFAFA;
+            border-top: 1px solid #333333;
+            bottom: 0px;
+            height: 200px;
+            overflow-y: scroll;
+            position: fixed;
+            width: 100%;
+        }
+    </style>
+  <script type="text/javascript" src="../common-music/js/Cindy.js"></script>
+  <script type="text/javascript" src="../common/js/Cindy3D.js"></script>
+
+  <script type="text/javascript" src="../common-music/js/midi/MIDI.js"></script>
+  <script type="text/javascript" src="../common-music/js/midi-plugin.js"></script>
+  <script type="text/javascript" src="../common-music/sf/MusyngKite/acoustic_grand_piano-mp3.js"></script>
+  <script type="text/javascript" src="../common-music/sf/MusyngKite/vibraphone-mp3.js"></script>
+  <script type="text/javascript" src="../common-music/sf/MusyngKite/acoustic_bass-mp3.js"></script>
+  <script type="text/javascript" src="../common-music/sf/MusyngKite/acoustic_guitar_nylon-mp3.js"></script>
+  <script type="text/javascript" src="../common/js/i18n4js-1.3.0.min.js"></script>
+    <script type="text/javascript" src="MidiConvert.js"></script>
+
+</head>
+<body>
+  <div class="app-fixedsize app-fixedsize-med">
+
+  <div id="FileDrop">
+    <input type="file" accept="audio/midi">
+  </div>
+
+<br><br>
+    <div id="CSCanvas"></div><canvas id="Cindy3D" width="800" height="600"></canvas>
+
+<script id="csinit" type="text/x-cindyscript">
+
+
+actualnotes=zerovector(120);
+actualaccords=zerovector(120);
+
+  readMidi(midi):=(
+notes=[];
+apply(1..length(midi),i,
+if(midi_i=="tracks",
+  tracks=(midi_(i+1));
+);
+if(midi_i=="header",
+  header=(midi_(i+1));
+);
+
+
+);
+println(header);
+ii=0;
+
+apply(1..length(header),i,
+if(header_i=="bpm",
+  bpm=(header_(i+1));
+);
+if(header_i=="name",
+  tunename=(header_(i+1));
+);
+if(header_i=="timeSignature",
+  takt=(header_(i+1));
+);
+if(header_i=="PPQ",
+  ppq=(header_(i+1));
+);
+);
+
+
+apply(tracks,tr,
+
+  apply(1..length(tr),i,
+    if(tr_i=="notes",
+      notes2=(tr_(i+1));
+    );
+  );
+
+  if(length(notes2)>0,
+    ii=ii+1;
+    apply(notes2,
+       erg=(#_4,#_6,#_8,#_10,ii);
+       notes=notes++[erg];
+    );
+  );
+);
+println(notes);
+);
+
+s5=[];
+apply(1..5,i,
+apply(1..5--[i],j,
+apply(1..5--[i,j],k,
+apply(1..5--[i,j,k],l,
+apply(1..5--[i,j,k,l],m,
+s5=s5++[[i,j,k,l,m]];
+)))));
+
+println(length(s5));
+scale=(1,3,5,8,10);  
+start=1;
+use("Cindy3D");
+drawpts=apply(1..5,(cos(#*72°),sin(#*72°)));
+
+
+instrument(33, channel->0); // Acoustic Bass
+instrument(12, channel->1); // Vibraphone
+instrument(1, channel->2); // Acoustic Grand Piano
+instrument(25, channel->3); // Acoustic Guitar (nylon)
+instrument(80, channel->4); // Occarina
+instrument(9, channel->5); // Celesta
+loadinstruments([33, 1, 25, 12]);
+posplay=(3,2);
+pospause=(5,2);
+posstop=(7,2);
+
+pos1=(13,2)+(1,1);
+pos2=(13,2)+(1,-1);
+pos3=(13,2)+(-1,-1);
+pos4=(13,2)+(-1,1);
+
+
+play=false;
+paused=false;
+  midiposition=0;
+  mp=0;
+  omp=-1;
+
+use("midi");
+
+play():=(
+
+  play=true;
+if(!paused,
+  ot=seconds();
+  t=seconds();
+playanimation();
+  );
+
+    paused=false;
+
+);
+stop():=(
+  play=false;
+  paused=false;
+  midiposition=0;
+  mp=0;
+  omp=0;
+
+);
+pause():=(
+  paused=true;
+);
+next=2;
+
+m(x):=mod(x-1,6)+1;
+r(x):=mod(x-1,12)+1;
+
+a=0.2;
+pts1=apply(0..5,
+ w=#*60°;
+ (cos(w),sin(w),a);
+);
+pts2=apply(0..5,
+ w=#*60°+30°;
+ (cos(w),sin(w),-a);
+);
+
+pts3=apply(1..6,
+  pts1_(m(#))+pts1_(m(#+1))-pts2_(m(#));
+);
+
+pts4=apply(1..6,
+  pts2_(m(#))+pts2_(m(#+1))-pts1_(m(#+1));
+);
+
+pts5=apply(1..6,
+  pts3_(m(#))+pts3_(m(#+1))-pts1_(m(#+1));
+);
+
+pts6=apply(1..6,
+  pts4_(m(#))+pts4_(m(#+1))-pts2_(m(#+1));
+);
+
+top=(0,0,1.2);
+bot=(0,0,-1.2);
+all=pts1++pts2++pts3++pts4++pts5++pts6++[bot,top];
+
+levels=sort(set(apply(all,#_3)));
+
+
+prs=pairs(all);
+prs1=(select(prs,|#_1,#_2|<.7&|#_1,#_2|>.6));
+prs2=(select(prs,|#_1,#_2|>.3&|#_1,#_2|<.4));
+
+levelup():=(
+  curlevel=(all_start)_3;
+  println("Cur "+curlevel );
+  levs=sort(select(levels,#~>curlevel));
+    println("Levs "+levs);
+
+  if(levs==[],all_start,((all_start)_1,(all_start)_2,levs_(1)));
+);
+
+leveldown():=(
+  curlevel=(all_start)_3;
+ println("Cur "+curlevel );
+
+  levs=sort(select(levels,#~<curlevel));
+      println("Levs "+levs);
+
+  if(levs==[],all_start,((all_start)_1,(all_start)_2,levs_(-1)));
+);
+
+
+rot=((cos(25°),sin(25°),0)
+     ,(sin(-25°),cos(25°),0),(0,0,1));
+println(rot);
+irot=inverse(rot);
+ne():=(
+  spos=rot*levelup();
+        println("spos "+spos);
+  pre=select(1..length(all),spos_3~=(all_#)_3);
+  start=sort(pre,|all_#,spos|)_1;
+);
+se():=(
+  spos=rot*leveldown();
+          println("spos "+spos);
+
+  pre=select(1..length(all),spos_3~=(all_#)_3);
+  start=sort(pre,|all_#,spos|)_1;
+  );
+sw():=(
+  spos=irot*leveldown();
+          println("spos "+spos);
+
+  pre=select(1..length(all),spos_3~=(all_#)_3);
+  start=sort(pre,|all_#,spos|)_1;
+  );
+nw():=(
+  spos=irot*levelup();
+          println("spos "+spos);
+
+  pre=select(1..length(all),spos_3~=(all_#)_3);
+  start=sort(pre,|all_#,spos|)_1;
+);
+
+sc1=(1,3,5,8,10);
+sc2=(1,3,5,7,10);
+sc3=(1,3,5,7,9);
+println(sc1);
+
+shift(scale,i):=[apply(scale,mod(#-1+i,12)+1)];
+
+scales=  shift(sc1,0)++shift(sc1,2)++shift(sc1,4)++shift(sc1,6)++shift(sc1,8)++shift(sc1,10)
+       ++shift(sc1,7)++shift(sc1,9)++shift(sc1,11)++shift(sc1,1)++shift(sc1,3)++shift(sc1,5)
+       ++shift(sc2,0)++shift(sc2,2)++shift(sc2,4)++shift(sc2,6)++shift(sc2,8)++shift(sc2,10)
+       ++shift(sc2,7)++shift(sc2,9)++shift(sc2,11)++shift(sc2,1)++shift(sc2,3)++shift(sc2,5)
+       ++shift(sc3,0)++shift(sc3,2)++shift(sc3,4)++shift(sc3,6)++shift(sc3,8)++shift(sc3,10)
+       ++shift(sc3,7)++shift(sc3,9)++shift(sc3,11)++shift(sc3,1)++shift(sc3,3)++shift(sc3,5)
+       ++[[2,4,6,8,10,12],[1,3,5,7,9,11]]
+       ;
+
+println(scales);
+tone=0;
+scalepos=all_start;
+</script>
+<script id="csmousedown" type="text/x-cindyscript">
+
+
+if(|mouse().xy,posplay|<1,play());
+if(|mouse().xy,pospause|<1,pause());
+if(|mouse().xy,posstop|<1,stop());
+if(|mouse().xy,pos1|<1,ne());
+if(|mouse().xy,pos2|<1,se());
+if(|mouse().xy,pos3|<1,sw());
+if(|mouse().xy,pos4|<1,nw());
+
+
+
+
+</script>
+<script id="csdraw" type="text/x-cindyscript">
+
+type=select(1..length(levels),levels_#==(all_start)_3)_1+1;
+
+
+cols=[[1,1,1]*.2,[1,.2,.2],[1,.4,.3],[1,.6,.3],[1,.8,.4],
+      [1,.8,.4],[1,.6,.3],[1,.4,.3],[1,.2,.2],[1,1,1]*.2];
+scale=scales_start;
+
+
+fillcircle((23,2),1.5,color->cols_type);
+drawcircle((23,2),1.5);
+
+
+
+pts=[];
+apply(1..12,
+  w=30°*#;
+  fillcircle((23,2)+(cos(w),sin(w))*1.5,0.1,color->(1,1,1)*.1);
+  if(contains(scale,#),pts=pts++[(cos(w),sin(w))]);
+);
+if(length(pts)==5,
+  poss=apply(s5,pts_#);
+  closest=sort(poss,|#,pts|)_1;
+  drawpts=0.95*drawpts+closest*0.05;
+);
+drawit=if(length(pts)==5,drawpts,pts);
+apply(drawit,
+     fillcircle((23,2)+#*1.5,0.3,color->(1,1,1));
+     drawcircle((23,2)+#*1.5,0.3,color->(1,1,1)*0,size->2);
+);
+
+
+
+
+  drawtext((.5,.5),start);
+  drawimage(posplay+(-1,-1),posplay+(1,-1),"play");
+drawimage(pospause+(-1,-1),pospause+(1,-1),"pause");
+drawimage(posstop+(-1,-1),posstop+(1,-1),"stop");
+ // midiposition=0;
+//  mp=0;
+//  omp=-0.001;
+
+dt=0;
+
+midp=(pos1+pos3)/2;
+draw(midp,pos1,color->(0,0,0));
+draw(midp,pos2,color->(0,0,0));
+draw(midp,pos3,color->(0,0,0));
+draw(midp,pos4,color->(0,0,0));
+draw(pos1,color->cols_(type+1),size->9);
+draw(pos2,color->cols_(type-1),size->9);
+draw(pos3,color->cols_(type-1),size->9);
+draw(pos4,color->cols_(type+1),size->9);
+draw(midp,color->cols_(type),size->4);
+drawtext(midp-(3,2),"Press one of the peripheral points");
+begin3d();
+
+
+draw3d(top,size->1.5,color->(1,.2,.2));
+draw3d(bot,size->1.5,color->(1,.2,.2));
+
+apply(pts1,draw3d(#,size->1.5,color->(1,.8,.4)));
+apply(pts2,draw3d(#,size->1.5,color->(1,.8,.4)));
+apply(pts3,draw3d(#,size->1.5,color->(1,.6,.3)));
+apply(pts4,draw3d(#,size->1.5,color->(1,.6,.3)));
+apply(pts5,draw3d(#,size->1.5,color->(1,.4,.3)));
+apply(pts6,draw3d(#,size->1.5,color->(1,.4,.3)));
+background3d((0,0,0));
+
+
+apply(prs1,draw3d(#_1,#_2,color->(1,.95,.8),size->.7));
+apply(prs2,draw3d(#_1,#_2,color->(1,.95,.8),size->.7));
+scalepos=scalepos*.95+all_start*.05;
+if(play,
+   draw3d(scalepos,size->2.3,color->(0,1,1));
+);
+end3d();
+/*
+t=seconds();
+if(play,
+ if(floor(ot*next)!=floor(t*next),
+
+   fullrange=flatten(apply(-2..2,i,apply((1..12)--scale,#+12*i)));
+  fullrange=flatten(apply(-2..2,i,apply(scale,#+12*i)));
+  // fullrange=sort(fullrange,|#-tone|)_[1,2,2,3,3,4,5]; 
+println(fullrange);
+
+   tone=fullrange_(randominteger(7)+1);
+
+   playtone(60+tone,channel->0);next=randominteger(2)*2;
+   next=10/(randominteger(2)+1);
+
+   oldtone=tone;
+   );
+);
+*/
+
+speed=2*|G,K|/|G,H|;
+
+unit=1/speed;//TODO STIMMT DAS?
+
+
+t=seconds();
+   fullrange=flatten(apply(-2..2,i,apply(scale,#+12*i+60)));
+  // fullrange=flatten(apply(-2..2,i,apply((1..12)--scale,#+12*i+60)));
+
+if(play & !paused,
+
+
+
+  midiposition=midiposition+(t-ot)/unit;
+ // drawtext((0,0),midiposition+" "+t+" "+unit);
+  mp=midiposition;
+
+  not=select(notes,#_2>omp&#_2<mp);
+  apply(not,
+  if(#_5==2 % true,
+ // println(#);
+
+ note=sort(fullrange,s,|s,#_1|)_1;
+     playtone(note,velocity->#_3,duration->#_4*unit*10,channel->2);
+     );
+    );
+  omp=mp;
+);
+
+//drawtext((-20,12),midiposition/unit,color->(1,1,1));
+
+
+ot=t;
+</script>
+    <script type="text/javascript">
+var cdy = CindyJS({
+  scripts: "cs*",
+  defaultAppearance: {
+    dimDependent: 0.7,
+    fontFamily: "sans-serif",
+    lineSize: 1,
+    pointSize: 5.0,
+    textsize: 12.0
+  },
+  angleUnit: "°",
+  ports: [{
+    id: "CSCanvas",
+    width: 800,
+    height: 150,
+    transform: [{visibleRect: [0, 0, 30, 4]}],
+    background: "rgb(168,176,192)"
+  }],
+      images:{
+
+      "play":"../common-music/img/Play.png",
+      "stop":"../common-music/img/Stop.png",
+      "pause":"../common-music/img/Pause.png"
+
+    },
+        geometry: [
+      {name: "G", type: "Free", pos: [2,.2], color: [0.0, 0.0, 0.0], size: 1.0,pinned:true},
+      {name: "H", type: "Free", pos: [8,.2], color: [0.0, 0.0, 0.0], size: 1.0,pinned:true},
+      {name: "e", type: "Segment", color: [0,0,0], args: ["G", "H"], size: 2},
+      {name: "K", type: "PointOnSegment", pos: [5,.2], color: [0,0,0], args: ["e"], text_fontfamily: "STSong", textsize: 18.0, textitalics: true,narrow:40}
+    ],
+  csconsole: false,
+  cinderella: {build: 1901, version: [2, 9, 1901]}
+});
+
+
+String.prototype.replaceAll = function(str1, str2, ignore) 
+{
+    return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
+} 
+
+
+    if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
+      document.querySelector("#FileDrop #Text").textContent = "Reading files not supported by this browser";
+    } else {
+
+      var fileDrop = document.querySelector("#FileDrop")
+
+      fileDrop.addEventListener("dragenter", function(){
+        fileDrop.classList.add("Hover");
+      })
+
+      fileDrop.addEventListener("dragleave", function(){
+        fileDrop.classList.remove("Hover");
+      });
+
+      fileDrop.addEventListener("drop", function(){
+        fileDrop.classList.remove("Hover");
+      });
+
+      document.querySelector("#FileDrop input").addEventListener("change", function(e){
+        //get the files
+        var files = e.target.files;
+        if (files.length > 0){
+          var file = files[0];
+          parseFile(file);
+        }
+      });
+    }
+
+
+    function parseFile(file){
+      //read the file
+      var reader = new FileReader();
+      reader.onload = function(e){
+        
+        var partsData = MidiConvert.parse(e.target.result);
+       // console.log(JSON.stringify(partsData, undefined, 2));
+
+var str=JSON.stringify(partsData, undefined, 2);
+str= str.replaceAll("{", "[");
+str= str.replaceAll("}", "]");
+str= str.replaceAll(":", ",");
+//console.log(str);
+       cdy.evokeCS("readMidi("+str+");");
+       // document.querySelector("#ResultsText").value = JSON.stringify(partsData, undefined, 2);
+      };
+      reader.readAsBinaryString(file);
+    }
+
+
+    </script>
+
+</body>
+</html>

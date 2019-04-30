@@ -1,0 +1,16 @@
+{
+  "id": "circular",
+  "version": "1.4.0",
+  "main": "app.html",
+  "width": 1200,
+  "height": 768,
+  "name": {
+    "en": "Spiral Music Space",
+    "de": "Spiral Music Space"
+  },
+  "description": {
+    "en": "",
+    "de": "",
+    "es": ""
+  }
+}

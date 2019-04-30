@@ -1,0 +1,16 @@
+{
+  "id": "gom3",
+  "version": "1.4.0",
+  "main": "app.html",
+  "width": 1200,
+  "height": 600,
+  "name": {
+    "en": "Space of Three-Note Chords",
+    "de": "Raum der 3-notigen Akkorde"
+  },
+  "description": {
+    "en": "",
+    "de": "",
+    "es": ""
+  }
+}

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>EuklidRhythm4.cdy</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #CSConsole {
+            background-color: #FAFAFA;
+            border-top: 1px solid #333333;
+            bottom: 0px;
+            height: 200px;
+            overflow-y: scroll;
+            position: fixed;
+            width: 100%;
+        }
+    </style>
+ <link rel="stylesheet" href="../common/css/default.css" media="screen" type="text/css">
+  <script type="text/javascript" src="../common/js/Cindy.js"></script>
+  <script type="text/javascript" src="../common/js/midi/MIDI.js"></script>
+  <script type="text/javascript" src="../common/js/midi-plugin.js"></script>
+
+  <script type="text/javascript" src="../common/sf/MusyngKite/acoustic_grand_piano-mp3.js"></script>
+  <script type="text/javascript" src="../common/sf/MusyngKite/vibraphone-mp3.js"></script>
+  <script type="text/javascript" src="../common/sf/MusyngKite/acoustic_bass-mp3.js"></script>
+  <script type="text/javascript" src="../common/sf/MusyngKite/acoustic_guitar_nylon-mp3.js"></script>
+  <script type="text/javascript" src="../common/sf/MusyngKite/drumset-mp3.js"></script>
+  <script type="text/javascript" src="../common/otherjs/i18n4js-1.3.0.min.js"></script>
+
+<script id="csdraw" type="text/x-cindyscript">
+fillpoly([[-50,-25],[-50,21  ],[-16,25],[-16,-25]],color->(0,0,0));
+A.size=10+bang*10;;
+bang=bang*.9;
+if(sel!=-1 & !isrunning,mb=B.xy);
+if(ma!=A.xy,sel=-1);
+if(mb!=B.xy,sel=-1);
+  apply(-20..20,draw((-100,#),(100,#),color->(1,1,1)*.3));
+  apply(-20..20,draw((#,-100),(#,100),color->(1,1,1)*.3));
+to=t;
+t=t+0.04;
+if(|round(A),A|<.2,A.xy=round(A));
+if(|round(B),B|<.2 & round(B)!=(0,0),B.xy=round(B.xy));
+
+speed=0.05*|S,U|;
+if(!isrunning,speed=0);
+slope=(C-B)/|C-B|;
+
+p=p+slope*speed;
+//draw(p);
+d=4;
+x=floor(p.x/d);
+y=floor(p.y/d);
+apply((x-5)..(x+5),i,
+  apply((y-5)..(y+5),j,
+    pos=(i,j)*d-p;
+    s1=(pos,pos+(1,0)*d);
+    s2=(pos,pos+(0,1)*d);
+    d1=drum((A,A+slope*speed),s1,60);
+    d2=drum((A,A+slope*speed),s2,62);
+
+    dd1=drum1((A,A+slope*speed),s1,60);
+    dd2=drum1((A,A+slope*speed),s2,62);
+
+
+
+    draw(s1,color->(-.5,1,.5),size->if(d1,15,2));
+    draw(s2,color->(1,.5,.5),size->if(d2,15,2));
+  );
+);
+draw(C,B,arrow->true,arrowsize->2,size->5,color->(1,1,1));
+
+fillpoly([(7,-100),(30,-100),(30,100),(7,100)],color->(0,0,0));
+if(isrunning,
+  drawimage((9.5,-9),(11.5,-9),"stop"),
+  drawimage((9.5,-9),(11.5,-9),"play")
+);
+s=1.2;
+drawtext((9.5,7.5),"synchronize",size->30,color->(1,1,1));
+
+
+drawimage(pos1+(-s,-s),pos1+(s,-s),"S1",alpha->if(sel==1,1,.4));
+drawimage(pos2+(-s,-s),pos2+(s,-s),"S2",alpha->if(sel==2,1,.4));
+drawimage(pos3+(-s,-s),pos3+(s,-s),"S3",alpha->if(sel==3,1,.4));
+drawpoly([pos1+(-s,-s),pos1+(-s,s),pos1+(s,s),pos1+(s,-s)],color->(1,1,1),size->if(sel==1,2,1),alpha->if(sel==1,1,.4));
+drawpoly([pos2+(-s,-s),pos2+(-s,s),pos2+(s,s),pos2+(s,-s)],color->(1,1,1),size->if(sel==2,2,1),alpha->if(sel==2,1,.4));
+drawpoly([pos3+(-s,-s),pos3+(-s,s),pos3+(s,s),pos3+(s,-s)],color->(1,1,1),size->if(sel==3,2,1),alpha->if(sel==3,1,.4));
+//  drawimage((10,-9),(12,-9),"stop");
+fillpoly([[-50,-25],[-50,21  ],[-16,25],[-16,-25]],color->(0,0,0));
+
+</script>
+
+
+<script id="csmousedown" type="text/x-cindyscript">
+    playtone(30,velocity->0);
+</script>
+
+<script id="csmouseup" type="text/x-cindyscript">
+
+if(|mouse().xy,pos1|<2,
+   p=(2,0);
+   A.xy=(0,2);
+   sel=1;
+   ma=A.xy;
+mb=B.xy;
+);
+
+
+if(|mouse().xy,pos2|<2,
+   p=(0,0);
+   A.xy=(0,2);
+   sel=2;
+ma=A.xy;
+mb=B.xy;
+);
+
+if(|mouse().xy,pos3|<2,
+   p=(0,2);
+   A.xy=(0,2);
+   sel=3;
+ma=A.xy;
+mb=B.xy;
+);
+
+
+
+if(|mouse().xy,(10.5,-8)|<2,
+  if(isrunning,
+    pauseanimation();
+    isrunning=false;
+  ,
+    playanimation();isrunning=true;
+  );
+
+)
+
+;
+</script>
+<script id="csinit" type="text/x-cindyscript">
+bang=0;
+t=0;
+to=0;
+sel=2;
+ma=A.xy;
+mb=B.xy;
+isrunning=false;
+use("midi");
+instrument(128, channel->9); // Vibraphone
+
+loadinstruments([128]);
+    playtone(30,velocity->0);
+
+p=(0,0);
+drum(seg1,seg2,tone):=(
+   if(
+       area(seg1_1,seg1_2,seg2_1)*area(seg1_1,seg1_2,seg2_2)<=0
+     & area(seg2_1,seg2_2,seg1_1)*area(seg2_1,seg2_2,seg1_2)<0,
+      playtone(tone,channel->9);
+      bang=1;
+      true,false
+
+   )
+);
+drum1(seg1,seg2,tone):=(
+   if(
+       area(seg1_1,seg1_2,seg2_1)*area(seg1_1,seg1_2,seg2_2)<0
+     & area(seg2_1,seg2_2,seg1_1)*area(seg2_1,seg2_2,seg1_2)<0,
+      playtone(tone,channel->9);
+      true,false
+
+   )
+);
+
+pos1=(11,5);
+pos2=(14,5);
+pos3=(17,5);
+
+</script>
+
+
+
+    <script type="text/javascript">
+cdy=createCindy({
+  scripts: "cs*",
+  defaultAppearance: {
+    dimDependent: 0.7,
+    fontFamily: "sans-serif",
+    lineSize: 1,
+    pointSize: 5.0,
+    textsize: 12.0
+  },
+  angleUnit: "°",
+  geometry: [
+    {name: "A", type: "Free", pos: [0,2], color: [1.0, 1.0, 1.0], visible: true, labeled: false},
+    {name: "B", type: "Free", pos: [-4,-4], color: [1.0, 0.0, 0.0], visible: true,size:0, labeled: false},
+    {name: "C", type: "Free", pos: [-6,-6], color: [1.0, 0.0, 0.0], visible: false, labeled: false},
+    {name: "S", type: "Free", pos: [9.5,-6], color: [1.0, 1.0, 1.0], visible: false, labeled: false},
+    {name: "T", type: "Free", pos: [14.5,-6], color: [1.0, 1.0, 1.0], visible: false, labeled: false},
+    {name: "a", type: "Segment", args: ["T","S"], color: [1,1,1], visible: true, size:3,labeled: false},
+    {name: "U", type: "PointOnSegment", args:["a"],pos: [12,-9], color: [1,1,1], visible: true, labeled: false}
+
+
+    ],
+    
+  animation: {autoplay: false, controls: true, speed: 1.0},
+  autoplay: false,
+  animcontrols: false,
+  use:["midi"],
+      images: {
+      stop:"../common/img/Stop.png",
+      play:"../common/img/Play.png",
+      S1:"S1.png",
+      S2:"S2.png",
+      S3:"S3.png",
+
+     },
+  ports: [{
+    id: "CSCanvas",
+    width: 1750,
+    height: 800,
+    transform: [{visibleRect: [-20-4, -23, 30-4, 23]}],
+    grid: 0,
+    snap: true,
+    background: "rgb(30,30,30)"
+  }],
+  cinderella: {build: 1864, version: [2, 9, 1864]}
+});
+
+    </script>
+</head>
+<body>
+    <div id="CSCanvas"></div>
+</body>
+
+
+
+</html>

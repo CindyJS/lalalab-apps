@@ -1,0 +1,16 @@
+{
+  "id": "grid",
+  "version": "1.4.0",
+  "main": "app.html",
+  "width": 1750,
+  "height": 800,
+  "name": {
+    "en": "grid rhythm",
+    "de": "Gitter Rhytmus"
+  },
+  "description": {
+    "en": "",
+    "de": "",
+    "es": ""
+  }
+}

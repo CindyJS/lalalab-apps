@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>EuklidRhythm4.cdy</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #CSConsole {
+            background-color: #FAFAFA;
+            border-top: 1px solid #333333;
+            bottom: 0px;
+            height: 200px;
+            overflow-y: scroll;
+            position: fixed;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="http://cinderella.de/CindyJS/latest/CindyJS.css">
+      <!-- shim -->
+    <script src="../inc/shim/Base64.js" type="text/javascript"></script>
+    <script src="../inc/shim/Base64binary.js" type="text/javascript"></script>
+    <script src="../inc/shim/WebAudioAPI.js" type="text/javascript"></script>
+    <!-- midi.js package -->
+    <script src="../build/MIDI.js" type="text/javascript"></script>
+    <!--script src="../MusyngKite/acoustic_grand_piano-mp3.js" type="text/javascript"></script>
+    <script src="../MusyngKite/vibraphone-mp3.js" type="text/javascript"></script>
+    <script src="../MusyngKite/gunshot-mp3.js" type="text/javascript"></script-->
+  <script src="./inc/timer.js" type="text/javascript"></script>
+
+
+    <link rel="stylesheet" href="http://cinderella.de/CindyJS/latest/CindyJS.css">
+    <script type="text/javascript" src="http://cindyjs.org/dist/latest/Cindy.js"></script>
+
+
+    <script src="midiPlugin.js" type="text/javascript"></script>
+
+<script id="csdraw" type="text/x-cindyscript">
+to=t;
+secs=seconds();
+speed=3*|S,U|;
+t=(secs-oldsecs)*speed;
+oldsecs=secs;
+draw(C,B,arrow->true,size->3,color->(0,0,0));
+
+
+slope=(C-B)/|C-B|;
+
+p=p+slope*t;
+//draw(p);
+d=8;
+r=0.3;
+x:=floor(p.x/d);
+y:=floor(p.y/d);
+apply((x-2)..(x+2),i,
+  apply((y-2)..(y+2),j,
+    pos=(i,j)*d-p;
+    s1=(pos,pos+(d,0));
+    s2=(pos,pos+(0,d));
+    s3=((pos+(0,0))*r+(1-r)*(pos+(0,d)),(pos+(0,d))*r+(1-r)*(pos+(d,d)));
+    s4=((pos+(0,d))*r+(1-r)*(pos+(d,d)),(pos+(d,d))*r+(1-r)*(pos+(d,0)));
+    s5=((pos+(d,d))*r+(1-r)*(pos+(d,0)),(pos+(d,0))*r+(1-r)*(pos+(0,0)));
+    s6=((pos+(d,0))*r+(1-r)*(pos+(0,0)),(pos+(0,0))*r+(1-r)*(pos+(0,d)));
+  
+    drum((A,A+slope*t),s1,61);
+    drum((A,A+slope*t),s2,36);
+    drum((A,A+slope*t),s3,69);
+    drum((A,A+slope*t),s4,69);
+    drum((A,A+slope*t),s5,69);
+    drum((A,A+slope*t),s6,69);
+
+    draw(s1,color->(0,0,.8),size->2);
+    draw(s2,color->(.7,0,0),size->2);
+    draw(s3,color->(0,.5,0),size->2);
+    draw(s4,color->(0,.5,0),size->2);
+    draw(s5,color->(0,.5,0),size->2);
+    draw(s6,color->(0,.5,0),size->2);
+  );
+);
+
+
+
+
+</script>
+
+<script id="csinit" type="text/x-cindyscript">
+oldsecs=seconds();
+t=0;
+to=0;
+initmidi(["gunshot","woodblock"]);
+p=(0,0);
+drum(seg1,seg2,tone):=(
+   if(
+       area(seg1_1,seg1_2,seg2_1)*area(seg1_1,seg1_2,seg2_2)<0
+     & area(seg2_1,seg2_2,seg1_1)*area(seg2_1,seg2_2,seg1_2)<0,
+      playtone(tone,channel->0);
+
+   )
+);
+
+
+</script>
+
+
+
+    <script type="text/javascript">
+cdy=createCindy({
+  scripts: "cs*",
+  defaultAppearance: {
+    dimDependent: 0.7,
+    fontFamily: "sans-serif",
+    lineSize: 1,
+    pointSize: 5.0,
+    textsize: 12.0
+  },
+  angleUnit: "°",
+  geometry: [
+    {name: "A", type: "Free", pos: [0,2], color: [1.0, 1.0, 1.0], visible: true, labeled: false},
+    {name: "B", type: "Free", pos: [-4,-4], color: [1.0, 0.0, 0.0], visible: true,size:0, labeled: false},
+    {name: "C", type: "Free", pos: [-6,-6], color: [1.0, 0.0, 0.0], visible: false, labeled: false},
+    {name: "S", type: "Free", pos: [7,-9], color: [1.0, 1.0, 1.0], visible: false, labeled: false},
+    {name: "T", type: "Free", pos: [11,-9], color: [1.0, 1.0, 1.0], visible: false, labeled: false},
+    {name: "a", type: "Segment", args: ["T","S"], color: [0,0,0], visible: true, size:3,labeled: false},
+    {name: "U", type: "PointOnSegment", args:["a"],pos: [9,-9], color: [0,0,0], visible: true, labeled: false}
+
+
+    ],
+    
+  animation: {autoplay: false, controls: true, speed: 1.0},
+  autoplay: false,
+  animcontrols: false,
+  use:["midi"],
+  ports: [{
+    id: "CSCanvas",
+    width: 829,
+    height: 518,
+    transform: [{visibleRect: [-10, 10, 10, -10]}],
+    grid: 1,
+    snap: true,
+    background: "rgb(168,176,192)"
+  }],
+  cinderella: {build: 1864, version: [2, 9, 1864]}
+});
+
+    </script>
+</head>
+<body>
+    <div id="CSCanvas"></div>
+</body>
+<button style="width:60px" onclick="cdy.evokeCS('playanimation()')">play</button>
+
+
+
+</html>
