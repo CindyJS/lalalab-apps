@@ -219,12 +219,13 @@ cdy=createCindy({
      },
   ports: [{
     id: "CSCanvas",
-    width: 1750,
-    height: 800,
-    transform: [{visibleRect: [-20-4, -23, 30-4, 23]}],
+      virtualwidth: 1920,
+      virtualheight: 972,
+      fill:"window",
+    transform: [{visibleRect: [-16, -24, 24, 22]}],
     grid: 0,
     snap: true,
-    background: "rgb(30,30,30)"
+    background: "rgb(15,15,15)"
   }],
   cinderella: {build: 1864, version: [2, 9, 1864]}
 });

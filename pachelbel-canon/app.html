@@ -14,9 +14,6 @@
   <script type="text/javascript" src="../common/sf/MusyngKite/acoustic_guitar_nylon-mp3.js"></script>
   <script type="text/javascript" src="../common/otherjs/i18n4js-1.3.0.min.js"></script>
 </head>
-<body>
-<div class="app-fixedsize app-fixedsize-med">
-<div id="CSCanvas"></div>
 
 <script id="csinit" type="text/x-cindyscript">
 posplay=(-14-2,-20);
@@ -464,7 +461,7 @@ drawimage(posinst32+(-2,-2),posinst32+(2,-2),"Inst2",scale->0.5,alpha->al3*if(in
 drawimage(posinst33+(-2,-2),posinst33+(2,-2),"Inst3",scale->0.5,alpha->al3*if(instr3==3,1,0.3));
 
 // drawtext((-20,20),international("APP_TITLE"),family->"Zapfino",size->25,color->(1,1,1)*.7);
-drawtext((0,-20),international("HINT_REPETITION"),family->"Helvetica",size->22,color->(1,1,1)*.7);
+drawtext((0,-20),international("HINT_REPETITION"),family->"Helvetica",size->30,color->(1,1,1)*.7);
 
 
 </script>
@@ -482,8 +479,11 @@ drawtext((0,-20),international("HINT_REPETITION"),family->"Helvetica",size->22,c
 
   var cdy = CindyJS({
     ports: [{
-      id: "CSCanvas", width: 1200, height: 768,
-      transform: [{visibleRect: [-30,5,45,-5]}]
+      id: "CSCanvas", 
+      virtualwidth: 1920,
+      virtualheight: 972,
+      fill:"window",
+      transform: [{visibleRect: [-30,25,45,-25]}]
     }],
     scripts: "cs*",
     geometry: [
@@ -507,7 +507,10 @@ drawtext((0,-20),international("HINT_REPETITION"),family->"Helvetica",size->22,c
     translations: translations
   });
 
+
 </script>
-</div>
+<body>
+<div id="CSCanvas"></div>
+
 </body>
 </html>

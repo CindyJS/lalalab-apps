@@ -13,9 +13,7 @@
   <script type="text/javascript" src="../common/sf/MusyngKite/pizzicato_strings-mp3.js"></script>
   <script type="text/javascript" src="../common/otherjs/i18n4js-1.3.0.min.js"></script>
 </head>
-<body>
-<div class="app-fixedsize app-fixedsize-med">
-<div id="CSCanvas"></div>
+
 
 <script id="csdraw" type="text/x-cindyscript">
 playanimation();
@@ -175,24 +173,24 @@ fillpolygon([
 
 //drawtext((-10,10),international("LONG_TITLE"),family->"Zapfino",size->25);
 //drawtext((-10,6),"dice game",family->"Zapfino",size->20);
-drawtext((-10,-14),international("TEMPO") + " = " +round(speed),family->"Helvetica",size->15);
+drawtext((-10,-14),international("TEMPO") + " = " +round(speed),family->"Helvetica",size->20);
 // drawtext((-4,-16),"press here to start",family->"Helvetica",size->12);
-drawtext((3,8),international("HINT_1_1"),family->"Helvetica",size->17);
-drawtext((3,7),international("HINT_1_2"),family->"Helvetica",size->17);
-drawtext((3,6),international("HINT_1_3"),family->"Helvetica",size->17);
-drawtext((3,5),international("HINT_1_4"),family->"Helvetica",size->17);
+drawtext((3,8),international("HINT_1_1"),family->"Helvetica",size->25);
+drawtext((3,7),international("HINT_1_2"),family->"Helvetica",size->25);
+drawtext((3,6),international("HINT_1_3"),family->"Helvetica",size->25);
+drawtext((3,5),international("HINT_1_4"),family->"Helvetica",size->25);
 //drawtext((3,3),"The sum (11 possibilities) determines",family->"Helvetica",size->17);
 //drawtext((3,2),"determines from a list which notes are taken.",family->"Helvetica",size->17);
 //drawtext((3,3),"Each bar can be selected from a ",family->"Helvetica",size->17);
 //drawtext((3,2),"list of 11 possiblities. ",family->"Helvetica",size->17);
 
-drawtext((3,-9), international("HINT_2_1"),family->"Helvetica",size->17);
-drawtext((3,-10), international("HINT_2_2"),family->"Helvetica",size->17);
-drawtext((3,-11), international("HINT_2_3"),family->"Helvetica",size->17);
-drawtext((3,-12), international("HINT_2_4"),family->"Helvetica",size->17);
-drawtext((3,-13), international("HINT_2_5"),family->"Helvetica",size->17);
-drawtext((3,-14), international("HINT_2_6"),family->"Helvetica",size->17);
-drawtext((3,-15), international("HINT_2_7"),family->"Helvetica",size->17);
+drawtext((3,-9), international("HINT_2_1"),family->"Helvetica",size->25);
+drawtext((3,-10), international("HINT_2_2"),family->"Helvetica",size->25);
+drawtext((3,-11), international("HINT_2_3"),family->"Helvetica",size->25);
+drawtext((3,-12), international("HINT_2_4"),family->"Helvetica",size->25);
+drawtext((3,-13), international("HINT_2_5"),family->"Helvetica",size->25);
+drawtext((3,-14), international("HINT_2_6"),family->"Helvetica",size->25);
+drawtext((3,-15), international("HINT_2_7"),family->"Helvetica",size->25);
 
 
 greset();
@@ -772,18 +770,18 @@ drawstrich(pos,strich):=(
 drawflats(pos,type):=(
   if(type==1,
   // drawimage(pos+(-.44,0),"is",scale->.24);
-   drawtext(pos+(-.8,-.29),
-             unicode("266f"),size->16);
+   drawtext(pos+(-.8,-.25),
+             unicode("266f"),size->23);
   );
   if(type==-1,
 //   drawimage(pos+(-.48,.1),"es",scale->.3);
     drawtext(pos+(-.9,-.2),
-             unicode("266d"),size->16);
+             unicode("266d"),size->23);
   )
 );
 
 drawcurl(pos):=(
-  drawimage(pos+(+1.78,-.3),"curl",scale->1.3);
+  drawimage(pos+(+1.78,-.3),"curl",scale->1.5);
 );
 
 drawsenk(pos,mi,ma,beat,type):=(
@@ -1034,8 +1032,8 @@ drawmeasure(m1,m2):=(
 showme(list):=(
   beatlength=4.5;
   quarters=1;
-  linien(-10,35,0);
-  linien(-10,35,-4);
+  linien(-20,35,0);
+  linien(-20,35,-4);
 
   mel=[["ch",0]];
   forall(list,mel=mel++#_1);
@@ -1060,8 +1058,8 @@ shownotes(list,posx):=(
   mpos=posx/beatlength;
 mpos=beatlength/7+posx;
   quarters=1;
-  linien(-12,15,0);
-  linien(-12,15,-4);
+  linien(-20,15,0);
+  linien(-20,15,-4);
 
   mel=[["ch",0]];
   forall(list,mel=mel++#_1);
@@ -1796,8 +1794,9 @@ fact=1;
     animcontrols: false,
     ports: [{
       id: "CSCanvas",
-      width: 1024,
-      height: 768,
+      virtualwidth: 1920,
+      virtualheight: 972,
+      fill:"window",
       transform: [{visibleRect: [-10.82, 14.42, 29.98, -12.7]}],
       background: "rgb(168,176,192)"
     }],
@@ -2100,6 +2099,7 @@ fact=1;
     return 0;
   }
 </script>
-</div>
+<body>
+<div id="CSCanvas"></div>
 </body>
 </html>

@@ -137,7 +137,7 @@ wo=w;
 if(inited& on,
 apply(1..20,i,
    if(collect_i!=0,
-       playsin(collect_i_1,amp->collect_i_2,damp->10,line->i);
+       playsin(collect_i_1,amp->.5*collect_i_2,damp->10,line->i);
 
    );
 );
@@ -206,8 +206,9 @@ var cdy = CindyJS({
 
   ports: [{
     id: "CSCanvas",
-    width: 1100,
-    height: 546,
+      virtualwidth: 1920,
+      virtualheight: 972,
+      fill:"window",
     transform: [{visibleRect: [-1.001355493998153, 3.064754693751923, 7.130864881501999, -1.0533739612188364]}],
     axes: false,
     background: "rgb(30,30,30)"

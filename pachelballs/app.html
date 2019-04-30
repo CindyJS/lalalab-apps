@@ -154,7 +154,7 @@ instrument(46, channel->3); // pizzi
 				pos = #_1 + [0,0.003];
 				age = #_4 + 1;
 				if(notedisplay,
-					drawtext(pos, #_2, color->[1,1,1], alpha->exp(-(age/10 - 2)), align->"mid");
+					drawtext(pos, #_2, color->[1,1,1], alpha->exp(-(age/10 - 2)), align->"mid",size->25);
 				);
 				[pos, #_2, #_3, age]
 			);
@@ -204,9 +204,10 @@ var cdy = CindyJS({
 
 	ports: [
 	{id: "CSCanvas", 
-    width: 1400,
-    height: 800,
-	transform: [{visibleRect: [-2, .7, 2, -.7]}], background: "rgb(30,30,30)"}
+      virtualwidth: 1920,
+      virtualheight: 972,
+      fill:"window",
+	transform: [{visibleRect: [-2, .7, 2, -.7]}], background: "rgb(0,0,0)"}
 ],
 	csconsole: false,
 	use: [

@@ -83,9 +83,9 @@ if(!isrunning,
 
 seco=seconds();
 
-drawtext(T1+(0.3,0.3),international("TEMPO"),size->16,color->(1,1,1)*.6);
-drawtext((-9,12),international("HINT_1"),size->22,color->(1,1,1)*.6);
-drawtext((13,12),international("HINT_2"),size->22,color->(1,1,1)*.6);
+drawtext(T1+(0.3,0.3),international("TEMPO"),size->20,color->(1,1,1)*.6);
+drawtext((-9,12),international("HINT_1"),size->28,color->(1,1,1)*.6);
+drawtext((13,12),international("HINT_2"),size->28,color->(1,1,1)*.6);
 //drawtext((-9,-10),international("HINT_1"),size->22,color->(1,1,1)*.6);
 //drawtext((-9,-11.5),international("HINT_2"),size->22,color->(1,1,1)*.6);
 
@@ -360,11 +360,14 @@ ot=0;
     animcontrols: false,
     ports: [{
       id: "CSCanvas",
-      width: 1750,
-      height: 800,
+      virtualwidth: 1920,
+      virtualheight: 972,
+      fill:"window",
       transform: [{visibleRect: [-10.7, 14, 25.42, -12]}],
       grid: 1.0,
-      background: "rgb(29,47,66)"
+      background: "rgb(29,47,66)",
+      background: "rgb(15,15,15)"
+
     }],
     cinderella: {build: 1872, version: [2, 9, 1872]},
     images: {

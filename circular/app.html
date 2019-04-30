@@ -424,7 +424,7 @@ apply(1..4,draw(drawpts3_#/|drawpts3_#|*16,size->15,color->(.6,.6,1),alpha->alph
 apply(1..12,
      w=-(#)*30°+90°;
      draw(gauss(exp(i*w)*4),gauss(exp(i*w)*14),size->30,color->(1,.8,.8),alpha->(aroused_#)^2);
-     drawtext(gauss(exp((i)*(w+30°))*18)+(0,-.5),notenames_#,color->(0,1,1),size->26,align->"center");
+     drawtext(gauss(exp((i)*(w+30°))*18)+(0,-.5),notenames_#,color->(0,1,1),size->35,align->"center");
   //   println(#);
 );
 /*apply(1..12,
@@ -471,7 +471,7 @@ if(actualnotes_#>0.01,si=10;al=1,si=0;al=0);
   aroused2=aroused2*(lam)+(1-lam)*aroused;
   trigger=trigger*.95;
   );
-speed=2*|G,K|/|G,H|*speedfact;
+speed=2*|G,K|/|G,H|*speedfact+.001;
 unit=speed*bpm/60/(takt_2/takt_1);//TODO STIMMT DAS?
 unit=speed/(takt_2/takt_1);//TODO STIMMT DAS?
 unit=1/speed;//TODO STIMMT DAS?
@@ -524,10 +524,10 @@ maxsel=min(length(tunes),sel+3);
 realshift=.9*realshift+.1*(selshift+sel*2);
 apply(1..length(tunes),
 ypos=(-#*2+realshift);
-drawtext((28,15+ypos-5),tunes_#_1,color->(1,1,1),alpha->1-(|ypos+2|/8)^(1/2));
+drawtext((28,15+ypos-5),size->25,tunes_#_1,color->(1,1,1),alpha->1-(|ypos+2|/8)^(1/2));
 );
-draw(selbox_1+(0,12.4),selbox_2+(0,12.4),color->(1,1,1));
-draw(selbox_1+(0,14.4),selbox_2+(0,14.4),color->(1,1,1));
+draw(selbox_1+(0,12.4),selbox_2+(-10,12.4),color->(1,1,1));
+draw(selbox_1+(0,14.4),selbox_2+(-10,14.4),color->(1,1,1));
 //drawtext(selbox_1,sel+" "+selshift,color->(1,1,1));
 
 w=[1,0,2,0,3,4,0,5,0,6,0,7];
@@ -599,8 +599,11 @@ apply(9..96,i,
 
   var cdy = CindyJS({
     ports: [{
-      id: "CSCanvas", width: 1200, height: 768,
-      transform: [{visibleRect: [-26,20,51,-25]}]
+      id: "CSCanvas",       
+      virtualwidth: 1920,
+      virtualheight: 972,
+      fill:"window",
+      transform: [{visibleRect: [-28,20,49,-25]}]
     }],
     scripts: "cs*",
     geometry: [
