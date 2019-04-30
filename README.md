@@ -1,13 +1,13 @@
 # lalalab-apps
 
 A collection of exhibit-ready [CindyJS](https://cindyjs.org/) applications made for the [Lalalab exhbition](https://lalalab.imaginary.org).
-These applets are supposed to be served through the [applauncher2 of IMAGINARY](IMAGINARY/applauncher2).
+These applets are supposed to be served through the [applauncher2 of IMAGINARY](https://github.com/IMAGINARY/applauncher2).
 
 This repository contains the exhibits of two collections: [ShowMeMusic](http://science-to-touch.com/LaLaLab/ShowMeMusic/) and [BeatBox](http://science-to-touch.com/LaLaLab/BeatBox/).
 
-## Installation with applauncher2
+## Installation (together with applauncher2)
 
-Download this repository and the [applauncher2 of IMAGINARY](IMAGINARY/applauncher2).
+Download this repository and the [applauncher2 of IMAGINARY](https://github.com/IMAGINARY/applauncher2).
 Copy the files `lalalab-apps/showmemusic.config.yml` and `lalalab-apps/beatbox.config.yml` to the folder `applauncher2/config/`. Put the folder `lalalab-apps` into `applauncher2`. This could be done through the commands:
 
 ```
@@ -19,7 +19,7 @@ mv lalalab-apps applauncher2
 
 ```
 
-Host the folder `applauncher2` on a web server. Then the two collections can be opened though `index.html?cfg=showmemusic` and `index.html?cfg=beatbox` respectively.
+Host the folder `applauncher2` on a web server. Then the two collections can be opened though `applauncher2/?cfg=showmemusic` and `applauncher2/?cfg=beatbox` respectively.
 
 ## Authors & License
 All the widgets except `pachelballs` were created by [Jürgen Richter-Gebert](https://geo.ma.tum.de/en/people/juergen-richter-gebert.html). `pachelballs` has been created by [Konrad Heidler](https://github.com/cloud-oak).
