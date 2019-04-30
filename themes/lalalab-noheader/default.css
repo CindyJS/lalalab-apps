@@ -2,22 +2,72 @@
 /* This forces apps to be displayed fullscreen    */
 /*************************************************/
 
+
+/* quicksand-regular - latin */
+@font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../../../lib/quicksand/quicksand-v9-latin-regular.eot'); /* IE9 Compat Modes */
+    src: local('Quicksand Regular'), local('Quicksand-Regular'),
+    url('../../../lib/quicksand/quicksand-v9-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../../../lib/quicksand/quicksand-v9-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+    url('../../../lib/quicksand/quicksand-v9-latin-regular.woff') format('woff'), /* Modern Browsers */
+    url('../../../lib/quicksand/quicksand-v9-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('../../../lib/quicksand/quicksand-v9-latin-regular.svg#Quicksand') format('svg'); /* Legacy iOS */
+}
+/* quicksand-700 - latin */
+@font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../../../lib/quicksand/quicksand-v9-latin-700.eot'); /* IE9 Compat Modes */
+    src: local('Quicksand Bold'), local('Quicksand-Bold'),
+    url('../../../lib/quicksand/quicksand-v9-latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../../../lib/quicksand/quicksand-v9-latin-700.woff2') format('woff2'), /* Super Modern Browsers */
+    url('../../../lib/quicksand/quicksand-v9-latin-700.woff') format('woff'), /* Modern Browsers */
+    url('../../../lib/quicksand/quicksand-v9-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('../../../lib/quicksand/quicksand-v9-latin-700.svg#Quicksand') format('svg'); /* Legacy iOS */
+}
+
 body {
-  background-color: #441030; }
+  font-family: Quicksand, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  background-color: #441030;
+  }
   body.mode-app {
-    background-color: #aa1030;
+    background-color: #331020;
 }
 
 .appContainer {
   height: 90vh !important;
-  /*bottom: 0 !important;*/
 }
 
 .appContainer iframe {
     transform: none !important;
 }
 
-.util-bar {
-    z-index: 2000 !important;
+body.mode-app .appPane {
+    top: 0 !important;
+    max-height: 90vh !important;
+    opacity: 1;
 }
-/*# sourceMappingURL=default.css.map */
+
+.menu-main-button.initializing:before,
+.menu-main-button.running:before {
+    width: 100%;
+    left: 0;
+    opacity: 1;
+    transition: width 0.5s, left 0.5s, opacity 0.5s;
+}
+
+.logo {
+    top: 7.5vh;
+    pointer-events: none;
+}
+
+.logo .logo-text {
+    font-family: Quicksand, Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    color: white;
+}
