@@ -1,3 +1,4 @@
 [submodule "applauncher2"]
 	path = applauncher2
 	url = https://github.com/IMAGINARY/applauncher2
+	ignore = untracked
