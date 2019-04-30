@@ -10,19 +10,9 @@ This repository contains the exhibits of two collections: [ShowMeMusic](http://s
 
 ## Installation (together with applauncher2)
 
-Download this repository and the [applauncher2 of IMAGINARY](https://github.com/IMAGINARY/applauncher2).
-Copy the files `lalalab-apps/showmemusic.config.yml` and `lalalab-apps/beatbox.config.yml` to the folder `applauncher2/config/`. Put the folder `lalalab-apps` into `applauncher2`. This could be done through the commands:
+Run `install.sh`, which will download the [applauncher2 of IMAGINARY](https://github.com/IMAGINARY/applauncher2) as submodule and add the corresponding configuration files.
 
-```
-git clone https://github.com/CindyJS/lalalab-apps.git &&
-git clone https://github.com/IMAGINARY/applauncher2.git &&
-cp lalalab-apps/showmemusic.config.yml applauncher2/cfg/ &&
-cp lalalab-apps/beatbox.config.yml applauncher2/cfg/ &&
-mv lalalab-apps applauncher2
-
-```
-
-Host the folder `applauncher2` on a web server. Then the two collections can be opened though `applauncher2/?cfg=showmemusic` and `applauncher2/?cfg=beatbox` respectively.
+Host everything on a web server. Then the two collections can be opened though `applauncher2/?cfg=showmemusic` and `applauncher2/?cfg=beatbox` respectively.
 
 ## Authors & License
 All the widgets except `pachelballs` were created by [Jürgen Richter-Gebert](https://geo.ma.tum.de/en/people/juergen-richter-gebert.html). `pachelballs` has been created by [Konrad Heidler](https://github.com/cloud-oak).
