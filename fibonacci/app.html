@@ -39,7 +39,7 @@ if(nn!=nno,
 nno=nn;
 
 T2.x=T1.x+(nn-2)*|T1,P8|/6;
-drawtext((7,1),nn+" "+international("HINT_2"),size->25,color->(1,1,1));
+drawtext((7,1),nn+" "+international("HINT_2"),size->35,color->(1,1,1));
 if(slow,
   note1=23;note2=24;speed=4.6
 ,
@@ -139,20 +139,20 @@ apply(((seqs_nn)),
 
 );
 if(fib_(nn-1)==1,
- drawtext((-18,14.5),fib_(nn-1)+" "+international("HINT_1")+" 2",color->(1,1,1),size->18),
- drawtext((-18,14.5),fib_(nn-1)+" "+international("HINT_1a")+" 2",color->(1,1,1),size->18)
+ drawtext((-18,14.5),fib_(nn-1)+" "+international("HINT_1")+" 2",color->(1,1,1),size->24),
+ drawtext((-18,14.5),fib_(nn-1)+" "+international("HINT_1a")+" 2",color->(1,1,1),size->24)
 );
 
 if(fib_(nn)==1,
-  drawtext((-7,14.5),fib_(nn)+" "+international("HINT_1")+" 1",color->(1,1,1),size->18),
-  drawtext((-7,14.5),fib_(nn)+" "+international("HINT_1a")+" 1",color->(1,1,1),size->18)
+  drawtext((-7,14.5),fib_(nn)+" "+international("HINT_1")+" 1",color->(1,1,1),size->24),
+  drawtext((-7,14.5),fib_(nn)+" "+international("HINT_1a")+" 1",color->(1,1,1),size->24)
   );
 
 
-drawtext((-18,-12),fib_(nn+1),color->(1,1,1),size->60);
+drawtext((-18,-12),fib_(nn+1),color->(1,1,1),size->70);
 
-drawtext((6,14.5),international("HINT_3"),color->(1,1,1),size->16);
-drawtext((6,13),international("HINT_4"),color->(1,1,1),size->16);
+drawtext((6,14.5),international("HINT_3"),color->(1,1,1),size->24);
+drawtext((6,13),international("HINT_4"),color->(1,1,1),size->24);
 
 </script>
 <script id="cstick" type="text/x-cindyscript">
@@ -296,11 +296,13 @@ bang=0;
     animcontrols: false,
     ports: [{
       id: "CSCanvas",
-    width: 1750,
-    height: 800,
-      transform: [{visibleRect: [-13-15, 14, 30+10, -12]}],
+      virtualwidth: 1920,
+      virtualheight: 972,
+      fill:"window",
+      transform: [{visibleRect: [-13-11, 14, 30+7, -12]}],
       grid: 1.0,
-      background: "rgb(29,47,66)"
+      background: "rgb(29,47,66)",
+      background: "rgb(15,15,15)"
     }],
     cinderella: {build: 1872, version: [2, 9, 1872]},
     images: {
