@@ -8,13 +8,13 @@ This repository contains the exhibits of two collections: [ShowMeMusic](http://s
 ![Screenshot of ShowMeMusic](SMM.png)
 ![Screenshot of BeatBox](BB.png)
 
-## Installation (together with applauncher2)
+## Installation
 
 Clone this repository via
 ```
 git clone https://github.com/CindyJS/lalalab-apps.git
 ```
-Then run `install.sh`, which will download the [applauncher2 of IMAGINARY](https://github.com/IMAGINARY/applauncher2) as submodule and add the corresponding configuration files.
+Then run `install.sh`, which will download the [applauncher2 of IMAGINARY](https://github.com/IMAGINARY/applauncher2) as submodule and add the configuration for BeatBox and ShowMeMusic.
 
 Host everything on a web server. Then the two collections can be opened though `applauncher2/?cfg=showmemusic` and `applauncher2/?cfg=beatbox` respectively.
 
