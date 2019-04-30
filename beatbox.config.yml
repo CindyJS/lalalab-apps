@@ -43,18 +43,18 @@ title:
 # on the app.json file format.
 #
 apps:
-  - lalalab-apps/sequenzer
-  - lalalab-apps/euclidian-rhythm
-  - lalalab-apps/noverm
-  - lalalab-apps/fibonacci
-  - lalalab-apps/clapping
-  - lalalab-apps/grid
+  - ../sequenzer
+  - ../euclidian-rhythm
+  - ../noverm
+  - ../fibonacci
+  - ../clapping
+  - ../grid
 
 
 #
 # App to load when the user clicks on the "info" button. Typically an
 # "about" or "credits" app.
-#
+# @TODO
 infoApp: https://imaginary.github.io/cindyjs-apps/info
 
 #

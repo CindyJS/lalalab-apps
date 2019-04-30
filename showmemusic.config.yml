@@ -43,13 +43,13 @@ title:
 # on the app.json file format.
 #
 apps:
-  - lalalab-apps/gom3
-  - lalalab-apps/circular
-  - lalalab-apps/pentatonic
-  - lalalab-apps/pachelbel-canon
-  - lalalab-apps/shepardtone
-  - lalalab-apps/mozart-dice
-  - lalalab-apps/pachelballs
+  - ../gom3
+  - ../circular
+  - ../pentatonic
+  - ../pachelbel-canon
+  - ../shepardtone
+  - ../mozart-dice
+  - ../pachelballs
 
 
 #
