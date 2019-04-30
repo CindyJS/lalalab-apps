@@ -1,0 +1,13 @@
+{
+  "id": "canon",
+  "version": "1.4.0",
+  "main": "app.html",
+  "name": {
+    "en": "major-minor canon",
+    "de": "Dur-Moll Kanon"
+  },
+  "description": {
+    "en": "",
+    "de": ""
+  }
+}
