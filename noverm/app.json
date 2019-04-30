@@ -2,8 +2,6 @@
   "id": "noverm",
   "version": "1.4.0",
   "main": "app.html",
-  "width": 1750,
-  "height": 800,
   "name": {
     "en": "n over m rhythms",
     "de": "n über m Rhytmen"

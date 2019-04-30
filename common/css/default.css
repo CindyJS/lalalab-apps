@@ -181,6 +181,7 @@ html {
  * Remove default margin.
  */
 body {
+  background-color: #FF0000;
   margin: 0; }
 
 /* ==========================================================================

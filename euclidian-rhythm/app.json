@@ -2,8 +2,6 @@
   "id": "euclidian-rhythm",
   "version": "1.4.0",
   "main": "app.html",
-  "width": 1750,
-  "height": 800,
   "name": {
     "en": "Euclidean Rhythm",
     "de": "Euklidischer Rhythmus",

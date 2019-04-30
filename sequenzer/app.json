@@ -2,8 +2,6 @@
   "id": "sequenzer",
   "version": "1.4.0",
   "main": "app.html",
-  "width": 1750,
-  "height": 800,
   "name": {
     "en": "Sequencer",
     "de": "Sequenzer",

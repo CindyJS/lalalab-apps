@@ -2,8 +2,6 @@
   "id": "pachelbel-canon",
   "version": "1.4.0",
   "main": "app.html",
-  "width": 1200,
-  "height": 768,
   "name": {
     "en": "Pachelbel's Canon",
     "de": "Kanon in D-Dur (Pachelbel)",
