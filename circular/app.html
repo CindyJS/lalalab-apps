@@ -270,9 +270,10 @@ colormap=apply(1..120,(1,.8,.4));
   if(inselbox(mouse().xy),
   println("*******************");
   //   selactive=true;selref=mouse().y;selshift=0;
-  if(mouse().y<selbox_1_2+12.4, sel=sel+1;sel=min(length(tunes)-1,sel));
-  if(mouse().y>selbox_1_2+14.4, sel=sel-1;sel=max(0,sel));
-
+  selo=sel;
+  if(mouse().y<selbox_1_2+12.4, sel=sel+floor(1+.5*(selbox_1_2+12.4-mouse().y));sel=min(length(tunes)-1,sel));
+  if(mouse().y>selbox_1_2+14.4, sel=sel-floor(1+.5*(-(selbox_1_2+14.4)+mouse().y));sel=max(0,sel));
+  if(sel!=selo,stop());
   selactive=false;
   selshift=0;
 
