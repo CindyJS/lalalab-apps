@@ -418,9 +418,14 @@ drawit();
 
 
 grestore();
-drawimage(posplay+(-2,-2),posplay+(2,-2),"play",alpha->1-already);
-drawimage(pospause+(-2,-2),pospause+(2,-2),"pause",scale->0.5,alpha->1-already);
-drawimage(posstop+(-2,-2),posstop+(2,-2),"stop",scale->0.5,alpha->1-already);
+//drawimage(posplay+(-2,-2),posplay+(2,-2),"play",alpha->1-already);
+//drawimage(pospause+(-2,-2),pospause+(2,-2),"pause",scale->0.5,alpha->1-already);
+//drawimage(posstop+(-2,-2),posstop+(2,-2),"stop",scale->0.5,alpha->1-already);
+
+drawimage(posplay+(-2,-2),posplay+(2,-2),"play",alpha->if(play&!paused,1,0.5));
+drawimage(pospause+(-2,-2),pospause+(2,-2),"pause",scale->0.5,alpha->if(paused&play,1,0.5));
+drawimage(posstop+(-2,-2),posstop+(2,-2),"stop",scale->0.5,alpha->if(!play,1,0.5));
+
 al1=min(1,max(0,midiposition-8));
 al2=min(1,max(0,midiposition-16));
 al3=min(1,max(0,midiposition-24));

@@ -259,16 +259,17 @@ colormap=apply(1..120,(1,.8,.4));
 
 </script>
 <script id="csmouseup" type="text/x-cindyscript">
+  selo=sel;
  if(selactive,
   sel=min(max(sel+round(selshift/2),0),length(tunes)-1);
   );
+  if(sel!=selo,stop());
   selactive=false;
   selshift=0;
 </script>
 
 <script id="csmouseclick" type="text/x-cindyscript">
   if(inselbox(mouse().xy),
-  println("*******************");
   //   selactive=true;selref=mouse().y;selshift=0;
   selo=sel;
   if(mouse().y<selbox_1_2+12.4, sel=sel+floor(1+.5*(selbox_1_2+12.4-mouse().y));sel=min(length(tunes)-1,sel));
@@ -487,7 +488,7 @@ if(play & !paused,
   apply(not,
   if(#_5==2 % true,
  // println(#);
-     playtone(#_1,velocity->#_3,duration->#_4*unit*10*2,channel->2);
+     playtone(#_1,velocity->#_3,duration->#_4*unit*10*2*.7,channel->2);
    //  playsin(261*((2^(1/12.6))^(#_1-60)),damp->10,amp->1,line->1);
      shownote(#_1,#_5,#_4,length(prenot));
      );
@@ -616,7 +617,7 @@ apply(9..96,i,
       {name: "G", type: "Free", pos: [30,-12], color: [0.0, 0.0, 0.0], size: 2.0,pinned:true},
       {name: "H", type: "Free", pos: [40,-12], color: [0.0, 0.0, 0.0], size: 2.0,pinned:true},
       {name: "e", type: "Segment", color: [0.7, 0.7, 0.7], args: ["G", "H"], size: 2},
-      {name: "K", type: "PointOnSegment", pos: [35,-16], color: [1.0, 1.0, 1.0], args: ["e"], text_fontfamily: "STSong", textsize: 18.0, textitalics: true,narrow:40}
+      {name: "K", type: "PointOnSegment", pos: [35,-16], color: [1.0, 1.0, 1.0], args: ["e"], text_fontfamily: "STSong", textsize: 18.0, textitalics: true,narrow:80}
     ],
     images:{
       "beg":"img/beg.png",
