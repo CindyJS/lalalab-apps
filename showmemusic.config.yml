@@ -57,8 +57,7 @@ apps:
 #
 # App to load when the user clicks on the "info" button. Typically an
 # "about" or "credits" app.
-# @TODO
-infoApp: https://imaginary.github.io/cindyjs-apps/info
+# infoApp: https://imaginary.github.io/cindyjs-apps/info
 
 #
 # Icons per row
