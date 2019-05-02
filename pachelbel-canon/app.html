@@ -268,9 +268,9 @@ drawit() := (
 //OK This is brute force. Improve if speed is a problem!!!
 ii=1;
 apply(all,
-if(#_2<=midiposition-24-2 & #_2>mso-24-2,playtone(#_1,channel->instr3);sizes_(ii)=1);
-if(#_2<=midiposition-16-2 & #_2>mso-16-2,playtone(#_1,channel->instr2);sizes_(ii)=1);
-if(#_2<=midiposition-8-2 & #_2>mso-8-2,playtone(#_1,channel->instr1,velocity->.7);sizes_(ii)=1);
+if(#_2<=midiposition-24-2 & #_2>mso-24-2,playtone(#_1,channel->instr3,duration->if(midiposition>222,3,1));sizes_(ii)=1);
+if(#_2<=midiposition-16-2 & #_2>mso-16-2,playtone(#_1,channel->instr2,duration->if(midiposition>222,3,1));sizes_(ii)=1);
+if(#_2<=midiposition-8-2 & #_2>mso-8-2,playtone(#_1,channel->instr1,velocity->.7,duration->if(midiposition>222,3,1));sizes_(ii)=1);
 ii=ii+1;
 );
 sizes=sizes*.97;
@@ -441,9 +441,14 @@ bass(7,4,3);
  // sandclock();
 //)
 grestore();
-drawimage(posplay+(-2,-2),posplay+(2,-2),"play");
-drawimage(pospause+(-2,-2),pospause+(2,-2),"pause",scale->0.5);
-drawimage(posstop+(-2,-2),posstop+(2,-2),"stop",scale->0.5);
+//drawimage(posplay+(-2,-2),posplay+(2,-2),"play");
+//drawimage(pospause+(-2,-2),pospause+(2,-2),"pause",scale->0.5);
+//drawimage(posstop+(-2,-2),posstop+(2,-2),"stop",scale->0.5);
+
+drawimage(posplay+(-2,-2),posplay+(2,-2),"play",alpha->if(play&!paused,1,0.5));
+drawimage(pospause+(-2,-2),pospause+(2,-2),"pause",scale->0.5,alpha->if(paused&play,1,0.5));
+drawimage(posstop+(-2,-2),posstop+(2,-2),"stop",scale->0.5,alpha->if(!play,1,0.5));
+
 al1=min(1,max(0,midiposition-8));
 al2=min(1,max(0,midiposition-16));
 al3=min(1,max(0,midiposition-24));
