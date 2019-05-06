@@ -96,7 +96,8 @@ positionpts=apply(1..12,
 
 
 follower=(1,4,7,10);  
-notenames=("$C$","$C\sharp$","$D$","$E\flat$","$E$","$F$","$F\sharp$","$G$","$G\sharp$","$A$","$B\flat$","$H$");
+//notenames=("$C$","$C\sharp$","$D$","$E\flat$","$E$","$F$","$F\sharp$","$G$","$G\sharp$","$A$","$B\flat$","$H$");
+notenames = tokenize(international("NOTES"), " ");
 tunename="NO TUNE YET";
 bpm=0;
 takt=[4,4];
