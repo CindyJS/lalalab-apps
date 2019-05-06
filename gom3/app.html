@@ -182,7 +182,15 @@ mo4():=(playpos=playpos+(-1,0,0);createshowset());
 mo5():=(playpos=playpos+(0,1,0);createshowset());
 mo6():=(playpos=playpos+(0,0,-1);createshowset());
 inited3d=false;
-notenames=("$C$","$C\sharp$","$D$","$E\flat$","$E$","$F$","$F\sharp$","$G$","$G\sharp$","$A$","$B\flat$","$H$");
+
+
+notelist="$C$;$C\sharp$;$D$;$E\flat$;$E$;$F$;$F\sharp$;$G$;$G\sharp$;$A$;$B\flat$;$B$";
+intern=international("notenames");
+println(">>>> "+intern);
+if(intern=="de",notelist="$C$;$C\sharp$;$D$;$E\flat$;$E$;$F$;$F\sharp$;$G$;$G\sharp$;$A$;$B$;$H$";);
+//notenames=("$C$","$C\sharp$","$D$","$E\flat$","$E$","$F$","$F\sharp$","$G$","$G\sharp$","$A$","$B\flat$","$H$");
+notenames=tokenize(notelist,";");
+
 </script>
 <script id="csmousedown" type="text/x-cindyscript">
 
@@ -208,6 +216,7 @@ if(|mouse().xy,pos6|<.3,mo6());
 
 
 draw((16,0),(16,4),color->(0,0,0));
+
 R1.y=max(0,min(R1.y,4));
 R1.x=16;
 par1=R1.y/4;
@@ -416,10 +425,34 @@ if(base*(100,10,1) > (base_[3,1,2])*(100,10,1),base=base_[3,1,2];nlist=nlist_[3,
 //drawtext((10,4),color->(1,1,1),base,size->30);
 //drawtext((10,3.7),color->(1,1,1),nlist,size->30);
 
+if(intern=="de",//BEWUSST SO ABGEFRAGT
+
+if(base==[3,5,4],drawtext((10,3-.1),color->(1,1,1),notenames_(1+nlist_3)+ "$dur$",size->35,align->"center"));
+if(base==[3,4,5],drawtext((10,3-.1),color->(1,1,1),notenames_(1+nlist_1)+ "$moll$",size->35,align->"center"));
+if(base==[3,3,6],drawtext((10,3-.1),color->(1,1,1),notenames_(1+nlist_1)+ "$^\circ$",size->35,align->"center"));
+if(base==[2,4,6],drawtext((10,3-.1),color->(1,1,1),notenames_(1+nlist_2)+ "$^7$",size->35,align->"center"));
+if(base==[2,3,5],drawtext((10,3-.1),color->(1,1,1),notenames_(1+nlist_2)+ "$-7$",size->35,align->"center"));
+if(base==[4,4,4],
+  drawtext((10,3-.1),color->(1,1,1),notenames_(1+nlist_1)+ "$aug$",size->35,align->"center");
+  drawtext((10,3-.35),color->(1,1,1),notenames_(1+nlist_2)+ "$aug$",size->35,align->"center");
+  drawtext((10,3+.15),color->(1,1,1),notenames_(1+nlist_3)+ "$aug$",size->35,align->"center");
+
+);
+if(base==[0,0,0],drawtext((10,3-.1),color->(1,1,1),"$unisono$ "+notenames_(1+nlist_1),size->35,align->"center"));
+if(base==[2,5,5],drawtext((10,3-.1),color->(1,1,1),notenames_(1+nlist_3)+ "$sus$",size->35,align->"center"));
+if(base==[0,5,5],drawtext((10,3-.1),color->(1,1,1),"$Qinte$" ,size->35,align->"center"));
+if(base==[0,6,6],drawtext((10,3-.1),color->(1,1,1),"$Tritonus$" ,size->35,align->"center"));
+if(base==[0,4,4],drawtext((10,3-.1),color->(1,1,1),"$grosse\; Terz$" ,size->35,align->"center"));
+if(base==[0,3,3],drawtext((10,3-.1),color->(1,1,1),"$kleine\; Terz$" ,size->35,align->"center"));
+if(base==[0,2,2],drawtext((10,3-.1),color->(1,1,1),"$Sekunde$" ,size->35,align->"center"));
+if(base==[0,1,1],drawtext((10,3-.1),color->(1,1,1),"$kleine\; Sekunde$" ,size->35,align->"center"));
+
+,
+
 if(base==[3,5,4],drawtext((10,3-.1),color->(1,1,1),notenames_(1+nlist_3)+ "$maj$",size->35,align->"center"));
 if(base==[3,4,5],drawtext((10,3-.1),color->(1,1,1),notenames_(1+nlist_1)+ "$min$",size->35,align->"center"));
 if(base==[3,3,6],drawtext((10,3-.1),color->(1,1,1),notenames_(1+nlist_1)+ "$dim$",size->35,align->"center"));
-if(base==[2,4,6],drawtext((10,3-.1),color->(1,1,1),notenames_(1+nlist_2)+ "$maj7$",size->35,align->"center"));
+if(base==[2,4,6],drawtext((10,3-.1),color->(1,1,1),notenames_(1+nlist_2)+ "$maj^7$",size->35,align->"center"));
 if(base==[2,3,5],drawtext((10,3-.1),color->(1,1,1),notenames_(1+nlist_2)+ "$min7$",size->35,align->"center"));
 if(base==[4,4,4],
   drawtext((10,3-.1),color->(1,1,1),notenames_(1+nlist_1)+ "$aug$",size->35,align->"center");
@@ -429,12 +462,14 @@ if(base==[4,4,4],
 );
 if(base==[0,0,0],drawtext((10,3-.1),color->(1,1,1),"unison "+notenames_(1+nlist_1),size->35,align->"center"));
 if(base==[2,5,5],drawtext((10,3-.1),color->(1,1,1),notenames_(1+nlist_3)+ "$sus$",size->35,align->"center"));
-if(base==[0,5,5],drawtext((10,3-.1),color->(1,1,1),"fifth" ,size->35,align->"center"));
-if(base==[0,6,6],drawtext((10,3-.1),color->(1,1,1),"triton" ,size->35,align->"center"));
-if(base==[0,4,4],drawtext((10,3-.1),color->(1,1,1),"major third" ,size->35,align->"center"));
-if(base==[0,3,3],drawtext((10,3-.1),color->(1,1,1),"minor third" ,size->35,align->"center"));
-if(base==[0,2,2],drawtext((10,3-.1),color->(1,1,1),"second" ,size->35,align->"center"));
-if(base==[0,1,1],drawtext((10,3-.1),color->(1,1,1),"small second" ,size->35,align->"center"));
+if(base==[0,5,5],drawtext((10,3-.1),color->(1,1,1),"$fifth$" ,size->35,align->"center"));
+if(base==[0,6,6],drawtext((10,3-.1),color->(1,1,1),"$triton$" ,size->35,align->"center"));
+if(base==[0,4,4],drawtext((10,3-.1),color->(1,1,1),"$major\; third$" ,size->35,align->"center"));
+if(base==[0,3,3],drawtext((10,3-.1),color->(1,1,1),"$minor\; third$" ,size->35,align->"center"));
+if(base==[0,2,2],drawtext((10,3-.1),color->(1,1,1),"$second$" ,size->35,align->"center"));
+if(base==[0,1,1],drawtext((10,3-.1),color->(1,1,1),"$small\; second$" ,size->35,align->"center"));
+
+);
 
 
 w=30°*n1;
@@ -456,8 +491,22 @@ if(n1==n2,draw((10,3)+(cos(30°*n1),sin(30°*n1))*1.3,color->(1,1,1),size->13);)
 if(n1==n3,draw((10,3)+(cos(30°*n1),sin(30°*n1))*1.3,color->(1,1,1),size->13););
 if(n3==n2,draw((10,3)+(cos(30°*n3),sin(30°*n3))*1.3,color->(1,1,1),size->13););
 if(n3==n2 &n2==n1,draw((10,3)+(cos(30°*n3),sin(30°*n3))*1.3,color->(1,1,1),size->16););
+
+
 </script>
     <script type="text/javascript">
+
+  var ready = createCindy.waitFor('i18n');
+  var translations = {};
+  IMAGINARY.i18n.init().then(function(lang){
+    translations[lang] = IMAGINARY.i18n.getStrings();
+    ready();
+  }).catch(function(err){
+    console.log("Error loading translation: " + err);
+    throw err;
+  });
+
+
 var cdy = CindyJS({
   scripts: "cs*",
   defaultAppearance: {
@@ -493,6 +542,8 @@ var cdy = CindyJS({
       "up":"Up.png",
 
     },
+        language: IMAGINARY.i18n.getLang(),
+    translations: translations,
   csconsole: false,
   cinderella: {build: 1901, version: [2, 9, 1901]}
 });
