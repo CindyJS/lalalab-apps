@@ -140,6 +140,15 @@ a
 </script>
 <script id="csmousedown" type="text/x-cindyscript">
     playtone(30,velocity->0);
+if(|mouse().xy,(26,-10)|<2,
+  if(isrunning,
+    pauseanimation();
+    isrunning=false;
+  ,
+    playanimation();isrunning=true;
+  );
+
+)
 
 </script>
 <script id="csmouseup" type="text/x-cindyscript">
@@ -159,15 +168,6 @@ forall(1..4,i,
 Text0.val=m;
 
 
-if(|mouse().xy,(26,-10)|<2,
-  if(isrunning,
-    pauseanimation();
-    isrunning=false;
-  ,
-    playanimation();isrunning=true;
-  );
-
-)
 
 ;
 </script>
