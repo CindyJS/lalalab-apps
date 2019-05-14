@@ -208,6 +208,23 @@ a
 
 ;
 </script>
+<script id="csmousedown" type="text/x-cindyscript">
+
+    playtone(30,velocity->0);
+
+if(|mouse().xy,(23,-10)|<2,
+  if(isrunning,
+    pauseanimation();
+    isrunning=false;
+  ,
+    playanimation();isrunning=true;
+  );
+
+);
+</script>
+
+
+
 <script id="csmouseup" type="text/x-cindyscript">
 if(!isrunning,
 forall(1..4,i,
@@ -229,15 +246,6 @@ if(claps,note=[25,26,0,0,0],note=[61,60,0,0,0]);
 Text0.val=m;
 
 
-if(|mouse().xy,(23,-10)|<2,
-  if(isrunning,
-    pauseanimation();
-    isrunning=false;
-  ,
-    playanimation();isrunning=true;
-  );
-
-)
 
 ;
 </script>
