@@ -73,8 +73,8 @@ draw(mid,mid+(sin(ww),cos(ww))*1.5,size->2,color->(1,1,1));
 
 
 
-ergf=apply(0..200,
-xx=#/200*8.1-1;
+ergf=apply(0..500,
+xx=#/500*8.1-1;
 (xx,g(xx));
 );
 fillpoly(ergf,color->(1,1,1)*.4);
@@ -109,8 +109,14 @@ apply(li,x=freq(#);
 );
 //  draw((f(x),0),color->(1,0,0));
 );
-plot(g(x),color->(1,1,1)*.9,size->3,pxlres->1);
-
+//plot(g(x),color->(1,1,1)*.9,size->3,pxlres->1);
+/*
+ergf=apply(0..1000,
+xx=#/1000*8.1-1;
+(xx,g(xx));
+);
+*/
+connect(ergf,color->(1,1,1)*.9,size->3);
 //  playsin(10*2^pow,harmonics->vals,amp->.1*|C,E|,line->1);
 
 
