@@ -493,7 +493,7 @@ if(play & !paused,
   apply(not,
   if(#_5==2 % true,
  // println(#);
-     playtone(#_1,velocity->#_3,duration->#_4*unit*10*2*1,channel->2);
+     playtone(#_1,velocity->#_3*1.2,duration->#_4*unit*10*2*1,channel->2);
    //  playsin(261*((2^(1/12.6))^(#_1-60)),damp->10,amp->1,line->1);
      shownote(#_1,#_5,#_4,length(prenot));
      );

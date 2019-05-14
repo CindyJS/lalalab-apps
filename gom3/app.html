@@ -312,7 +312,7 @@ if(play,
    tone=fullranges_1;
    if(tone>36,tone=-24);
 */
-   playtone(60+tone,channel->2);
+   playtone(60+tone,channel->2,velocity->0.8);
    trigger_(tone+60)=1;
    next=10/(randominteger(2)+1);
 next=12;

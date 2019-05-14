@@ -268,9 +268,9 @@ drawit() := (
 //OK This is brute force. Improve if speed is a problem!!!
 ii=1;
 apply(all,
-if(#_2<=midiposition-24-2 & #_2>mso-24-2,playtone(#_1,channel->instr3,duration->if(midiposition>222,3,1));sizes_(ii)=1);
-if(#_2<=midiposition-16-2 & #_2>mso-16-2,playtone(#_1,channel->instr2,duration->if(midiposition>222,3,1));sizes_(ii)=1);
-if(#_2<=midiposition-8-2 & #_2>mso-8-2,playtone(#_1,channel->instr1,velocity->.7,duration->if(midiposition>222,3,1));sizes_(ii)=1);
+if(#_2<=midiposition-24-2 & #_2>mso-24-2,playtone(#_1,channel->instr3,velocity->.7,duration->if(midiposition>222,3,1));sizes_(ii)=1);
+if(#_2<=midiposition-16-2 & #_2>mso-16-2,playtone(#_1,channel->instr2,velocity->.7,duration->if(midiposition>222,3,1));sizes_(ii)=1);
+if(#_2<=midiposition-8-2 & #_2>mso-8-2,playtone(#_1,channel->instr1,velocity->.5,duration->if(midiposition>222,3,1));sizes_(ii)=1);
 ii=ii+1;
 );
 sizes=sizes*.97;
