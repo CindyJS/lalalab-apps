@@ -392,7 +392,7 @@ apply(0..7,
 
 
 
-speed=|G,K|/|G,H|+1;
+speed=|G,K|/|G,H|*1.5+1;
 
 if(midiposition>219.4,speed=speed*(((226.4-midiposition)/7)^(1/2)*.8+.2));
 if(midiposition>226.4,speed=0);
