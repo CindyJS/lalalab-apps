@@ -50,6 +50,7 @@ apps:
   - ../canon
   - ../pachelbel-canon
   - ../shepardtone
+  - ../shepardrhythm
   - ../mozart-dice
   - ../pachelballs
 

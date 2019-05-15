@@ -1,0 +1,11 @@
+{
+  "id": "shepardrhythm",
+  "version": "1.0.0",
+  "main": "app.html",
+  "name": {
+    "en": "Shepard Rhythm"
+  },
+  "description": {
+    "en": ""
+  }
+}
