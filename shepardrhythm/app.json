@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "app.html",
   "name": {
-    "en": "Shepard Rhythm"
+    "en": "Shepard Rhythm",
+    "de": "Shepard Rhythmus"
   },
   "description": {
     "en": ""
