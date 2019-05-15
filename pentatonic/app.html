@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    
+
     <title>Construction.cdy</title>
     <style type="text/css">
         * {
@@ -35,16 +35,7 @@
     <script type="text/javascript" src="MidiConvert.js"></script>
 
 </head>
-<body>
-  <!--
-  <div class="app-fixedsize app-fixedsize-med">
 
-  <div id="FileDrop">
-    <input type="file" accept="audio/midi">
-  </div></div>
-
-<br><br>-->
-    <div id="CSCanvas"></div>
 
 <script id="csinit" type="text/x-cindyscript">
 
@@ -60,8 +51,9 @@ tunes=[
 ["Rimsky Korsakov: Flight of a Bumble Bee","notesRimski",1,0,1.5,.7,1]
 
 ];
-selbox=[[12,-2],[23,-2],[23,11],[12,11]];
-selboxsm=[[12,1],[23,1],[23,11],[12,11]];
+
+selbox=[[12,-2],[20,-2],[20,11],[12,11]];
+selboxsm=[[12,1],[20,1],[20,11],[12,11]];
 selt=0;
 notes = notesArabesque;
 inselbox(p):=(p.x>selbox_1_1&p.y>selbox_1_2&p.x<selbox_3_1&p.y<selbox_3_2);
@@ -142,7 +134,7 @@ s5=s5++[[i,j,k,l,m]];
 )))));
 
 println(s5);
-scale=(1,3,5,8,10);  
+scale=(1,3,5,8,10);
 start=1;
 use("Cindy3D");
 drawpts=apply(1..5,(cos(#*72°),sin(#*72°)));
@@ -169,7 +161,7 @@ sel=1;
 
 play=false;
 paused=false;
-    midiposition=0;
+  midiposition=0;
   mp=0;
   omp=-1;
 
@@ -197,8 +189,9 @@ playanimation();
 stop():=(
   play=false;
   paused=false;
-    midiposition=startpos;
+      midiposition=startpos;
   mp=startpos;
+
   omp=0;
 
 );
@@ -265,7 +258,7 @@ through=false;
 
   );
 
-</script>  
+</script>
 
 <script id="csmousedrag" type="text/x-cindyscript">
   if(selactive,
@@ -279,7 +272,6 @@ through=false;
   );
   selactive=false;
   selshift=0;
-
 </script>
 <script id="csmousedown" type="text/x-cindyscript">
 if(|mouse().xy,(16,-2)|<3,through=true;);
@@ -305,6 +297,8 @@ cols=[[1,1,1]*.2,[1,.2,.2],[1,.4,.3],[1,.6,.3],[1,.8,.4],
 scale=scales_start;
 
 
+//fillcircle((23,2),1.5,color->cols_type);
+//drawcircle((23,2),1.5);
 
 
 
@@ -336,7 +330,7 @@ if(play,
 
    fullrange=flatten(apply(-2..2,i,apply((1..12)--scale,#+12*i)));
   fullrange=flatten(apply(-2..2,i,apply(scale,#+12*i)));
-   fullrange=sort(fullrange,|#-tone|)_[2,2,3,3,4,5]; 
+   fullrange=sort(fullrange,|#-tone|)_[2,2,3,3,4,5];
 
    tone=fullrange_(randominteger(length(fullrange))+1);
 
@@ -368,8 +362,7 @@ if(play & !paused,
 
 
   midiposition=midiposition+(t-ot)/unit;
- // drawtext((4,0),midiposition,color->(1,1,1));
- // drawtext((4,1),speedfact,color->(1,1,1));
+ // drawtext((0,0),midiposition+" "+t+" "+unit);
   mp=midiposition;
 
   not=select(notes,#_2>omp&#_2<mp);
@@ -379,7 +372,7 @@ if(play & !paused,
 
  note=sort(fullrange,s,|s,#_1|)_1;
  if(through,note=#_1);
-     playtone(note,velocity->#_3,duration->#_4*unit*10,channel->0);
+     playtone(note,velocity->#_3,duration->#_4*unit*10*2,channel->0);
      scaletriggers_(mod(note-1,12)+1)=1;
      );
     );
@@ -450,7 +443,7 @@ maxsel=min(length(tunes),selt+3);
 realshift=.9*realshift+.1*(selshift+selt*2);
 apply(1..length(tunes),
 ypos=(-#*2+realshift);
-drawtext((12.5,15+ypos*.5-7),tunes_#_1,size->14,color->(1,1,1),alpha->1-(|ypos+2|/8)^(1/2));
+drawtext((12.5,15+ypos*.5-7),tunes_#_1,size->20,color->(1,1,1),alpha->1-(|ypos+2|/8)^(1/2));
 );
 draw(selbox_1+(0,9.6),selbox_2+(0,9.6),color->(1,1,1));
 draw(selbox_1+(0,8.7),selbox_2+(0,8.7),color->(1,1,1));
@@ -471,9 +464,10 @@ var cdy = CindyJS({
   angleUnit: "°",
   ports: [{
     id: "CSCanvas",
-    width: 1200,
-    height: 600,
-    transform: [{visibleRect: [-20, -12,28 , 12]}],
+    virtualwidth: 1920,
+    virtualheight: 1080,
+    fill: "window",
+    transform: [{visibleRect: [-18, -12,26 , 12]}],
     background: "rgb(20,20,20)"
   }],
       images:{
@@ -496,10 +490,10 @@ var cdy = CindyJS({
 });
 
 
-String.prototype.replaceAll = function(str1, str2, ignore) 
+String.prototype.replaceAll = function(str1, str2, ignore)
 {
     return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
-} 
+}
 
 
     if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
@@ -535,7 +529,7 @@ String.prototype.replaceAll = function(str1, str2, ignore)
       //read the file
       var reader = new FileReader();
       reader.onload = function(e){
-        
+
         var partsData = MidiConvert.parse(e.target.result);
        // console.log(JSON.stringify(partsData, undefined, 2));
 
@@ -552,6 +546,8 @@ str= str.replaceAll(":", ",");
 
 
     </script>
+<body>
 
+    <div id="CSCanvas"></div>
 </body>
 </html>

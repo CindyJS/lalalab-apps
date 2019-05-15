@@ -46,7 +46,7 @@ theme: ../../themes/lalalab-noheader
 apps:
   - ../gom3
   - ../circular
- # - ../pentatonic
+  - ../pentatonic
   - ../canon
   - ../pachelbel-canon
   - ../shepardtone
