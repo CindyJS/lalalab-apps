@@ -33,15 +33,33 @@
   <script type="text/javascript" src="../common/otherjs/i18n4js-1.3.0.min.js"></script>
 
 <script id="csdraw" type="text/x-cindyscript">
+
+  U2.x=round((U2.x-9.5)/5*8)/8*5+9.5;
+  ti=seconds();
+  sel=round((U2.x-9.5)/5*8)+1;
+  if(sel!=selo,
+defs=[def3,def4,def5,def5,def6,def7,def8,def9]_sel;
+selo=sel;
+);
+dt=ti-oti;
+oti=ti;
+ti=seconds();
 //draw((-5,-5),size->siz*20);
 siz=siz*.9;
 
 speed=0.01*|S,U|;
+speed2=|S1,U1|-2.5;
+
+corr=speed2;
+if(|corr|<.01,corr=0.01);
 if(!isrunning,speed=0);
 
 if(isrunning,
-  fact=fact+speed*0.1;
-  t=t+speed;
+//  fact=fact+speed*0.1*corr;
+fact=fact+speed*max(dt,0.001)*corr*5;
+
+
+//  t=t+speed;
 );
 
 apply(1..9,i,
@@ -52,9 +70,9 @@ apply(1..9,i,
  mid=defs_i_5;
  facti=mod(fact+sh,3);
  rfact=(2^facti);
-
- time=20*rfact;
- vol=1/exp(((facti-mid)*1.3)^2);
+ time=20*rfact/corr;
+ //drawtext((0,i),time,color->(1,1,1),size->20);
+vol=1/exp(((facti-mid)*1.3)^2);
  y=+(facti-mid)*5;
 draw((-17,y),(8,y),alpha->vol,color->(1,1,1));
 apply(-floor(time)-5*rfact..(-floor(time)+5*rfact),
@@ -70,15 +88,15 @@ draw((x-5,y),alpha->vol,size->vol*3+si,color->hue(i/9)*.5+(1,1,1)*.5);
 defs_i_2=defs_i_2*.9;
 //drawtext((-10,y),pat,size->12,color->(1,1,1));
 
-
- if(isrunning&vol>0.01,
+changing=down;
+ if(isrunning&vol>0.01&!changing,
    if(floor(time)!=floor(otime),
 
      pa=mod(floor(time),8)+1;
      if(pat_pa==1,
         defs_i_2=1;
 
-        playtone(perc,channel->9,velocity->.1*vol);
+        playtone(perc,channel->9,velocity->vol);
      );
    );
    defs_i_1=time;
@@ -99,14 +117,28 @@ if(isrunning,
   drawimage((9.5,-9),(11.5,-9),"stop"),
   drawimage((9.5,-9),(11.5,-9),"play")
 );
+
+drawtext(S+(0,.3),"Tempo",color->(1,1,1),size->15);
+drawtext(S1+(0,.3),"Boost",color->(1,1,1),size->15);
+
+apply(0..8,
+     x=9.5+#*5/8;
+     draw((x,S2.y+.3),(x,S2.y-.3),color->(1,1,1));
+
+);
+
+     draw((12,S1.y+.3),(12,S1.y-.3),color->(1,1,1));
+
 </script>
 
 
 <script id="csmousedown" type="text/x-cindyscript">
+  down=true;
     playtone(30,velocity->0);
 </script>
 
 <script id="csmouseup" type="text/x-cindyscript">
+  down=false;
 
 
 
@@ -129,6 +161,11 @@ fact=0;
 t=0;
 to=0;
 fact=0;
+down=false;
+
+ti=seconds();
+tio=ti;
+dt=0;
 isrunning=false;
 use("midi");
 instrument(128, channel->9); // Vibraphone
@@ -137,18 +174,8 @@ loadinstruments([128]);
     playtone(30,velocity->0);
 
 
-defs=[
 
-[0,0,[1,1,1,1,1,1,1,1],67,1.7,0],
-[0,0,[1,0,0,0,0,0,0,0],25,1.3,0],
-[0,0,[1,0,1,0,1,0,1,0],46,1.7,1],
-[0,0,[1,0,0,1,0,0,1,1],48,1.3,1],
-[0,0,[1,0,1,0,1,0,1,0],61,1.7,2],
-[0,0,[1,0,0,1,0,0,1,1],65,1.3,2],
-
-];
-
-defs=[
+def1=[
 
 [0,0,[1,0,1,0,0,1,0,1],63,1.8,0],
 [0,0,[1,0,0,0,1,0,1,0],25,1.5,0],
@@ -165,7 +192,7 @@ defs=[
 
 
 
-defs=[
+def2=[
 
 [0,0,[1,0,0,0,1,0,0,0],47,1.8,0],
 [0,0,[1,0,1,0,1,0,1,0],64,1.5,0],
@@ -179,7 +206,7 @@ defs=[
 
 ];
 
-defs=[
+def3=[
 
 [0,0,[1,0,0,0,1,0,0,0],47,1.8,0],
 [0,0,[1,0,1,0,1,0,1,0],64,1.5,0],
@@ -193,7 +220,7 @@ defs=[
 
 ];
 
-defs=[
+def4=[
 
 [0,0,[1,0,1,0,0,1,0,1],47,1.8,0],
 [0,0,[1,0,0,0,1,0,1,0],64,1.5,0],
@@ -208,21 +235,21 @@ defs=[
 ];
 
 
-defsx=[
+def5=[
 
 [0,0,[1,1,1,1,1,1,1,1],75,1.8,1],
 [0,0,[1,0,1,0,1,0,1,0],76,1.5,log(3)/log(2)],
 [0,0,[0,0,0,0,0,0,0,0],75,1.2,0],
-[0,0,[0,0,0,0,0,0,0,0],50,1.8,1],
-[0,0,[0,0,0,0,0,0,0,0],62,1.5,1],
+[0,0,[1,1,1,1,1,1,1,1],75,1.8,1],
+[0,0,[1,0,1,0,1,0,1,0],76,1.5,log(3)/log(2)],
 [0,0,[0,0,0,0,0,0,0,0],77,1.2,1],
-[0,0,[0,0,0,0,0,0,0,0],45,1.8,2],
-[0,0,[0,0,0,0,0,0,0,0],61,1.5,2],
+[0,0,[1,1,1,1,1,1,1,1],75,1.8,2],
+[0,0,[1,0,1,0,1,0,1,0],76,1.5,log(3)/log(2)],
 [0,0,[0,0,0,0,0,0,0,0],76,1.2,2]
 
 ];
 
-defsx=[
+def6=[
 
 [0,0,[1,0,1,0,0,1,0,1],47,1.8,0],
 [0,0,[1,0,0,0,1,0,1,0],64,1.5,0],
@@ -237,7 +264,7 @@ defsx=[
 ];
 
 
-defs=[
+def7=[
 
 [0,0,[1,0,1,0,0,1,0,1],47,1.2,0],
 [0,0,[1,0,0,0,1,0,1,0],64,1.5,0],
@@ -251,7 +278,7 @@ defs=[
 
 ];
 
-defs=[
+def8=[
 
 [0,0,[1,0,1,0,0,1,0,1],70,1.2,0],
 [0,0,[1,0,0,0,1,0,1,0],76,1.5,0],
@@ -264,21 +291,21 @@ defs=[
 [0,0,[1,1,0,1,0,0,0,1],48,1.8,2]
 
 ];
-defs=[
+def9=[
 
 [0,0,[1,0,1,0,0,1,0,1],63,1.8,0],
 [0,0,[1,0,0,0,1,0,1,0],25,1.5,0],
 [0,0,[0,0,1,0,0,1,0,0],44,1.2,0],
-[0,0,[1,0,1,0,1,0,1,0],46,1.8,1],
+[0,0,[1,0,1,0,1,0,1,0],75,1.8,1],
 [0,0,[1,0,0,1,0,0,1,1],48,1.5,1],
 [0,0,[1,1,0,0,0,0,1,0],39,1.2,1],
-[0,0,[1,0,1,0,1,0,1,0],61,1.8,2],
+[0,0,[1,0,1,0,1,0,1,0],60,1.8,2],
 [0,0,[1,0,0,1,0,0,1,1],65,1.5,2],
 [0,0,[1,1,0,1,0,0,0,1],62,1.2,2]
 
 ];
 
-defsx=[
+def10=[
 
 [0,0,[1,0,0,0,1,1,0,1],63,1.8,0],
 [0,0,[1,0,0,1,0,0,1,0],25,1.5,0],
@@ -291,9 +318,18 @@ defsx=[
 [0,0,[0,1,0,1,0,0,0,1],62,1.2,2]
 
 ];
-
-
+//defs=def2;
+defs=def3;
+defs=def4;
+defs=def5;
+defs=def5;
+defs=def6;
+defs=def7;
+defs=def8;
+defs=def9;
+sel=1;selo=1;
 </script>
+
 
 
 
@@ -315,11 +351,20 @@ cdy=createCindy({
     {name: "S", type: "Free", pos: [9.5,-6], color: [1.0, 1.0, 1.0], visible: false, labeled: false},
     {name: "T", type: "Free", pos: [14.5,-6], color: [1.0, 1.0, 1.0], visible: false, labeled: false},
     {name: "a", type: "Segment", args: ["T","S"], color: [1,1,1], visible: true, size:3,labeled: false},
-    {name: "U", type: "PointOnSegment", args:["a"],pos: [12,-9], color: [1,1,1], visible: true, labeled: false}
+    {name: "U", type: "PointOnSegment", args:["a"],pos: [12.5,-9], color: [1,1,1], visible: true, labeled: false},
+ 
+  {name: "S1", type: "Free", pos: [9.5,-4], color: [1.0, 1.0, 1.0], visible: false, labeled: false},
+    {name: "T1", type: "Free", pos: [14.5,-4], color: [1.0, 1.0, 1.0], visible: false, labeled: false},
+    {name: "a1", type: "Segment", args: ["T1","S1"], color: [1,1,1], visible: true, size:3,labeled: false},
+    {name: "U1", type: "PointOnSegment", args:["a1"],pos: [13,-9], color: [1,1,1], visible: true, labeled: false},
+
+  {name: "S2", type: "Free", pos: [9.5,-1], color: [1.0, 1.0, 1.0], visible: false, labeled: false},
+    {name: "T2", type: "Free", pos: [14.5,-1], color: [1.0, 1.0, 1.0], visible: false, labeled: false},
+    {name: "a2", type: "Segment", args: ["T2","S2"], color: [1,1,1], visible: true, size:3,labeled: false},
+    {name: "U2", type: "PointOnSegment", args:["a2"],pos: [0,-1], color: [1,1,1], visible: true, labeled: false}
 
 
     ],
-
   animation: {autoplay: false, controls: true, speed: 1.0},
   autoplay: false,
   animcontrols: false,
