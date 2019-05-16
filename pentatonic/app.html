@@ -250,8 +250,16 @@ through=false;
 </script>
 <script id="csmouseclick" type="text/x-cindyscript">
   if(inselboxsm(mouse().xy),
-  if(mouse().y<selbox_1_2+8.7, selt=selt+1;selt=min(length(tunes)-1,selt));
-  if(mouse().y>selbox_1_2+9.6, selt=selt-1;selt=max(0,selt));
+  selto=selt;
+
+  //if(mouse().y<selbox_1_2+8.7, selt=selt+1;selt=min(length(tunes)-1,selt));
+  //if(mouse().y>selbox_1_2+9.6, selt=selt-1;selt=max(0,selt));
+
+  if(mouse().y<selbox_1_2+8.7, selt=selt+floor(1+.9*(selbox_1_2+8.7-mouse().y));selt=min(length(tunes)-1,selt));
+  if(mouse().y>selbox_1_2+9.6, selt=selt-floor(1+.9*(-(selbox_1_2+9.6)+mouse().y));selt=max(0,selt));
+ 
+
+  if(selt!=selto,stop());
 
   selactive=false;
   selshift=0;
@@ -267,9 +275,13 @@ through=false;
 </script>
 <script id="csmouseup" type="text/x-cindyscript">
   through=false;
+    selto=selt;
+
  if(selactive,
   selt=min(max(selt+round(selshift/2),0),length(tunes)-1);
   );
+    if(selt!=selto,stop());
+
   selactive=false;
   selshift=0;
 </script>
