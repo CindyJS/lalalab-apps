@@ -44,9 +44,9 @@ theme: ../../themes/lalalab-noheader
 # on the app.json file format.
 #
 apps:
-  - ../gom3
   - ../circular
   - ../pentatonic
+  - ../gom3
   - ../canon
   - ../pachelbel-canon
   - ../shepardtone
