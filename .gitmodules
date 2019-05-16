@@ -2,12 +2,3 @@
 	path = applauncher2
 	url = https://github.com/IMAGINARY/applauncher2
 	ignore = untracked
-[submodule "ScaleLab"]
-	path = ScaleLab
-	url = https://github.com/CindyJS/ScaleLab
-[submodule "PentatonicScales"]
-	path = PentatonicScales
-	url = https://github.com/CindyJS/PentatonicScales
-[submodule "SpectrumAnalyser"]
-	path = SpectrumAnalyser
-	url = https://github.com/CindyJS/SpectrumAnalyser
