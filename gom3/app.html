@@ -411,17 +411,16 @@ n1=mod(-playpos_1+3,12);
 n2=mod(-playpos_2+11,12);
 n3=mod(-playpos_3+7,12);
 
-cdist(a,b):=
-if(a<b,
-min(b-a,12+a-b),
-min(a-b,12+b-a)
-);
-
-base=[cdist(n1,n2),cdist(n2,n3),cdist(n3,n1)];
-nlist=[mod(-n1+3,12),mod(-n2+3,12),mod(-n3+3,12)];
-if(base*(100,10,1) > (base_[2,3,1])*(100,10,1),base=base_[2,3,1];nlist=nlist_[2,3,1]);
-if(base*(100,10,1) > (base_[2,3,1])*(100,10,1),base=base_[2,3,1];nlist=nlist_[2,3,1]);
-if(base*(100,10,1) > (base_[3,1,2])*(100,10,1),base=base_[3,1,2];nlist=nlist_[3,1,2]);
+nlong = sort(-[n1,n2,n3,n1+12,n2+12,n3+12]);
+base = apply(1..3, k, nlong_(k+1)-nlong_(k));
+nlist=[mod(nlong_1+3,12),mod(nlong_2+3,12),mod(nlong_3+3,12)];
+//base=[cdist(n1,n2),cdist(n2,n3),cdist(n3,n1)];
+//nlist=[mod(-n1+3,12),mod(-n2+3,12),mod(-n3+3,12)];
+//drawtext((10,6),color->(1,1,.6),nlong,size->30);
+//drawtext((10,4.5),color->(1,.6,1),base,size->30);
+if(base*(144,12,1) > (base_[2,3,1])*(144,12,1),base=base_[2,3,1];nlist=nlist_[2,3,1]);
+if(base*(144,12,1) > (base_[2,3,1])*(144,12,1),base=base_[2,3,1];nlist=nlist_[2,3,1]);
+if(base*(144,12,1) > (base_[3,1,2])*(144,12,1),base=base_[3,1,2];nlist=nlist_[3,1,2]);
 //drawtext((10,4),color->(1,1,1),base,size->30);
 //drawtext((10,3.7),color->(1,1,1),nlist,size->30);
 
@@ -438,14 +437,14 @@ if(base==[4,4,4],
   drawtext((10,3+.15),color->(1,1,1),notenames_(1+nlist_3)+ "$\text{aug}$",size->35,align->"center");
 
 );
-if(base==[0,0,0],drawtext((10,3-.1),color->(1,1,1),"$\text{unisono}$ "+notenames_(1+nlist_1),size->35,align->"center"));
+if(base==[0,0,12],drawtext((10,3-.1),color->(1,1,1),"$\text{unisono}$ "+notenames_(1+nlist_1),size->35,align->"center"));
 if(base==[2,5,5],drawtext((10,3-.1),color->(1,1,1),notenames_(1+nlist_3)+ "$\text{sus}$",size->35,align->"center"));
-if(base==[0,5,5],drawtext((10,3-.1),color->(1,1,1),"$\text{Qinte}$" ,size->35,align->"center"));
+if(base==[0,5,7] % base==[0,7,5],drawtext((10,3-.1),color->(1,1,1),"$\text{Qinte}$" ,size->35,align->"center"));
 if(base==[0,6,6],drawtext((10,3-.1),color->(1,1,1),"$\text{Tritonus}$" ,size->35,align->"center"));
-if(base==[0,4,4],drawtext((10,3-.1),color->(1,1,1),"$\text{große Terz}$" ,size->35,align->"center"));
-if(base==[0,3,3],drawtext((10,3-.1),color->(1,1,1),"$\text{kleine Terz}$" ,size->35,align->"center"));
-if(base==[0,2,2],drawtext((10,3-.1),color->(1,1,1),"$\text{Sekunde}$" ,size->35,align->"center"));
-if(base==[0,1,1],drawtext((10,3-.1),color->(1,1,1),"$\text{kleine Sekunde}$" ,size->35,align->"center"));
+if(base==[0,4,8] % base==[0,8,4],drawtext((10,3-.1),color->(1,1,1),"$\text{große Terz}$" ,size->35,align->"center"));
+if(base==[0,3,9] % base==[0,9,3],drawtext((10,3-.1),color->(1,1,1),"$\text{kleine Terz}$" ,size->35,align->"center"));
+if(base==[0,2,10] % base==[0,10,2],drawtext((10,3-.1),color->(1,1,1),"$\text{Sekunde}$" ,size->35,align->"center"));
+if(base==[0,1,11] % base==[0,11,1],drawtext((10,3-.1),color->(1,1,1),"$\text{kleine Sekunde}$" ,size->35,align->"center"));
 
 ,
 
@@ -460,14 +459,14 @@ if(base==[4,4,4],
   drawtext((10,3+.15),color->(1,1,1),notenames_(1+nlist_3)+ "$\text{aug}$",size->35,align->"center");
 
 );
-if(base==[0,0,0],drawtext((10,3-.1),color->(1,1,1),"$\text{unison}$ "+notenames_(1+nlist_1),size->35,align->"center"));
+if(base==[0,0,12],drawtext((10,3-.1),color->(1,1,1),"$\text{unison}$ "+notenames_(1+nlist_1),size->35,align->"center"));
 if(base==[2,5,5],drawtext((10,3-.1),color->(1,1,1),notenames_(1+nlist_3)+ "$\text{sus}$",size->35,align->"center"));
-if(base==[0,5,5],drawtext((10,3-.1),color->(1,1,1),"$\text{fifth}$" ,size->35,align->"center"));
+if(base==[0,5,7] % base==[0,7,5],drawtext((10,3-.1),color->(1,1,1),"$\text{fifth}$" ,size->35,align->"center"));
 if(base==[0,6,6],drawtext((10,3-.1),color->(1,1,1),"$\text{triton}$" ,size->35,align->"center"));
-if(base==[0,4,4],drawtext((10,3-.1),color->(1,1,1),"$\text{major third}$" ,size->35,align->"center"));
-if(base==[0,3,3],drawtext((10,3-.1),color->(1,1,1),"$\text{minor third}$" ,size->35,align->"center"));
-if(base==[0,2,2],drawtext((10,3-.1),color->(1,1,1),"$\text{second}$" ,size->35,align->"center"));
-if(base==[0,1,1],drawtext((10,3-.1),color->(1,1,1),"$\text{small second}$" ,size->35,align->"center"));
+if(base==[0,4,8] % base==[0,8,4],drawtext((10,3-.1),color->(1,1,1),"$\text{major third}$" ,size->35,align->"center"));
+if(base==[0,3,9] % base==[0,9,3],drawtext((10,3-.1),color->(1,1,1),"$\text{minor third}$" ,size->35,align->"center"));
+if(base==[0,2,10] % base==[0,10,2],drawtext((10,3-.1),color->(1,1,1),"$\text{second}$" ,size->35,align->"center"));
+if(base==[0,1,11] % base==[0,11,1],drawtext((10,3-.1),color->(1,1,1),"$\text{small second}$" ,size->35,align->"center"));
 
 );
 
