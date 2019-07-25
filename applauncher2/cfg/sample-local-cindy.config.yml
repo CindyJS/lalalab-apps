@@ -1,0 +1,34 @@
+lang: en
+title:
+  en: Math to Touch
+  es: Matemática para tocar
+  ru: Математика на ощупь
+  ro: Matematica de atins
+logo:
+  lg: assets/img/lg_imaginary_white.png
+apps:
+  - apps/cindyjs/iornament
+  - apps/cindyjs/doppelpendel
+  - apps/cindyjs/fish
+  - apps/cindyjs/sphere-chaos
+  - apps/cindyjs/ausparken
+  - apps/cindyjs/kaleidoskop
+  - apps/cindyjs/platonic-solids
+  - apps/cindyjs/polytope-morpher
+  - apps/cindyjs/solitaire
+  - apps/cindyjs/image-spiral
+  - apps/cindyjs/tree
+  - apps/cindyjs/euclidian-rhythm
+  - apps/cindyjs/mozart-dice
+  - apps/cindyjs/pachelbel-canon
+  - apps/cindyjs/sequenzer
+  - apps/cindyjs/whitney
+infoApp: apps/cindyjs/info
+langMenuShow: true
+langMenuItems:
+  - en
+  - de
+  - es
+  - ru
+  - ro
+  - zh

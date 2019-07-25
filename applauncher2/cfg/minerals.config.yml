@@ -1,0 +1,84 @@
+#
+# Default language
+#
+lang: en
+
+#
+# This title will be shown on top of the menu if no logo image is specified.
+# It's possible to specify a single string for all languages or to configure
+# each language separately.
+#
+title:
+  en: Mathematics and Minerals
+  de: Mathematik und Mineralien
+
+#
+# Logo image to show on top of the menu.
+# It's possible to specify a single image file or to configure each language
+# separately. If separate languages are used then any languages without an
+# image will use the title instead. Use 'default' as a language code to have
+# a default fallback logo image.
+#
+# example: Single image for all languages:
+#
+# logo: assets/img/lg_imaginary_white.png
+#
+# example: Only use logo for english and german
+#
+# logo:
+#   en: assets/img/lg_imaginary_white.png
+#   de: assets/img/lg_imaginary_white.png
+
+#
+# List of apps to load in the menu
+# Each app is specified by the path or URL to the app directory where the
+# app.json manifest file is located.
+#
+apps:
+  - https://imaginary.github.io/cindyjs-apps/platonic-solids
+  - https://imaginary.github.io/cindyjs-apps/polytope-morpher
+  - https://imaginary.github.io/cindyjs-apps/psolids-folder
+  - https://imaginary.github.io/cindyjs-apps/archimedean-solids
+  - https://imaginary.github.io/cindyjs-apps/crystal-packing
+  - https://imaginary.github.io/cindyjs-apps/crystal-fractals
+  - https://imaginary.github.io/cindyjs-apps/crystal-intersections
+  - https://imaginary.github.io/cindyjs-apps/crystal-viewer
+  - https://imaginary.github.io/cindyjs-apps/sphere-packing
+  - https://imaginary.github.io/cindyjs-apps/atomic-lattice
+  - https://imaginary.github.io/cindyjs-apps/particles
+  - https://imaginary.github.io/cindyjs-apps/4d-cube
+  - https://imaginary.github.io/cindyjs-apps/4d-rotation
+  - https://imaginary.github.io/cindyjs-apps/slicer-3d
+  - https://imaginary.github.io/cindyjs-apps/slicer-4d
+
+#
+# App to load when the user clicks on the "info" button. Typically an
+# "about" or "credits" app.
+#
+infoApp: https://imaginary.github.io/cindyjs-apps/info
+
+#
+# Show language switcher menu (true/false)
+#
+# NOTE: It's not always a good idea to enable a language switcher. It will make
+# it more difficult for people coming across the station and people watching over
+# the user's shoulder to understand what's going on and they might just walk
+# away or waste time finding how to switch languages instead of playing with our
+# software. Enable ONLY if needed for the exhibition.
+#
+# IMPORTANT: If you enable the language menu choose which languages to show
+# wisely! Select only those appropriate to the exhibition and avoid showing
+# more than one local variant of the same language.
+# Also only enable languages for which translations are available.
+#
+langMenuShow: true
+
+#
+# Indicate which languages to show if the language switcher menu is shown
+# (use ISO 639-1 language codes)
+#
+langMenuItems:
+  - en
+  - de
+
+theme: indigo

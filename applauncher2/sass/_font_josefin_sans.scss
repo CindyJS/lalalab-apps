@@ -1,0 +1,14 @@
+@include font-face("josefin-sans", "../fonts/Josefin_Sans/JosefinSans-Bold", 700, normal, $file-formats: ttf);
+@include font-face("josefin-sans", "../fonts/Josefin_Sans/JosefinSans-BoldItalic", 700, italic, $file-formats: ttf);
+@include font-face("josefin-sans", "../fonts/Josefin_Sans/JosefinSans-SemiBold", 600, normal, $file-formats: ttf);
+@include font-face("josefin-sans", "../fonts/Josefin_Sans/JosefinSans-SemiBoldItalic", 600, italic, $file-formats: ttf);
+@include font-face("josefin-sans", "../fonts/Josefin_Sans/JosefinSans-Regular", 400, normal, $file-formats: ttf);
+@include font-face("josefin-sans", "../fonts/Josefin_Sans/JosefinSans-Italic", 400, italic, $file-formats: ttf);
+@include font-face("josefin-sans", "../fonts/Josefin_Sans/JosefinSans-Light", 300, normal, $file-formats: ttf);
+@include font-face("josefin-sans", "../fonts/Josefin_Sans/JosefinSans-LightItalic", 300, italic, $file-formats: ttf);
+@include font-face("josefin-sans", "../fonts/Josefin_Sans/JosefinSans-Thin", 100, normal, $file-formats: ttf);
+@include font-face("josefin-sans", "../fonts/Josefin_Sans/JosefinSans-ThinItalic", 100, italic, $file-formats: ttf);
+
+@mixin JosefinSans {
+  font-family: 'josefin-sans', 'sans-serif';
+}

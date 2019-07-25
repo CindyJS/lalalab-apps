@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "title": "app.json schema",
+  "description": "See README for descriptions and defaults",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9_-]+$"
+    },
+    "version": {
+      "type": "string"
+    },
+    "name": {
+      "$ref": "#/definitions/localizableString"
+    },
+    "description": {
+      "$ref": "#/definitions/localizableString"
+    },
+    "type": {
+      "enum": ["iframe", "executable", "remote"]
+    },
+    "main": {
+      "type": "string"
+    },
+    "width": {
+      "type": "number"
+    },
+    "height": {
+      "type": "number"
+    },
+    "enableExecution": {
+      "type": "boolean"
+    },
+    "args": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "cwd": {
+      "type": "string"
+    },
+    "env": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "shell": {
+      "type": "boolean"
+    }
+  },
+  "required": ["id", "name", "main"],
+  "definitions": {
+    "localizableString": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "patternProperties": {
+            "^[a-zA-Z]+(-[a-zA-Z]+)?$": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

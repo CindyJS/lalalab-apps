@@ -1,0 +1,18 @@
+ul.menu-lang {
+  margin: 0 auto;
+  position: absolute;
+  bottom: 5vh;
+  width: 100%;
+  li {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    a {
+      display: inline-block;
+      padding: 1.5vh;
+      @include largeText;
+      text-decoration: none;
+      color: $color-white;
+    }
+  }
+}

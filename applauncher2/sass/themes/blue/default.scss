@@ -1,0 +1,12 @@
+/** blue theme **/
+@import '../../warning';
+
+$color-background: #283046;
+
+body{
+  background-color: $color-background;
+
+  &.mode-app {
+    background-color: darken($color-background, 12%);
+  }
+}

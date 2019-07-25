@@ -1,0 +1,14 @@
+@include font-face("lato", "../fonts/Lato/Lato-Black", 900, normal, $file-formats: ttf);
+@include font-face("lato", "../fonts/Lato/Lato-BlackItalic", 900, italic, $file-formats: ttf);
+@include font-face("lato", "../fonts/Lato/Lato-Bold", 600, normal, $file-formats: ttf);
+@include font-face("lato", "../fonts/Lato/Lato-BoldItalic", 600, italic, $file-formats: ttf);
+@include font-face("lato", "../fonts/Lato/Lato-Regular", 400, normal, $file-formats: ttf);
+@include font-face("lato", "../fonts/Lato/Lato-Italic", 400, italic, $file-formats: ttf);
+@include font-face("lato", "../fonts/Lato/Lato-Light", 300, normal, $file-formats: ttf);
+@include font-face("lato", "../fonts/Lato/Lato-LightItalic", 300, italic, $file-formats: ttf);
+@include font-face("lato", "../fonts/Lato/Lato-Hairline", 100, normal, $file-formats: ttf);
+@include font-face("lato", "../fonts/Lato/Lato-HairlineItalic", 100, italic, $file-formats: ttf);
+
+@mixin Lato {
+  font-family: 'lato', 'sans-serif';
+}

@@ -1,0 +1,22 @@
+@include font-face("raleway", "../fonts/Raleway/Raleway-Black", 900, normal, $file-formats: ttf);
+@include font-face("raleway", "../fonts/Raleway/Raleway-BlackItalic", 900, italic, $file-formats: ttf);
+@include font-face("raleway", "../fonts/Raleway/Raleway-ExtraBold", 800, normal, $file-formats: ttf);
+@include font-face("raleway", "../fonts/Raleway/Raleway-ExtraBoldItalic", 800, italic, $file-formats: ttf);
+@include font-face("raleway", "../fonts/Raleway/Raleway-Bold", 700, normal, $file-formats: ttf);
+@include font-face("raleway", "../fonts/Raleway/Raleway-BoldItalic", 700, italic, $file-formats: ttf);
+@include font-face("raleway", "../fonts/Raleway/Raleway-SemiBold", 600, normal, $file-formats: ttf);
+@include font-face("raleway", "../fonts/Raleway/Raleway-SemiBoldItalic", 600, italic, $file-formats: ttf);
+@include font-face("raleway", "../fonts/Raleway/Raleway-Medium", 500, normal, $file-formats: ttf);
+@include font-face("raleway", "../fonts/Raleway/Raleway-MediumItalic", 500, italic, $file-formats: ttf);
+@include font-face("raleway", "../fonts/Raleway/Raleway-Regular", 400, normal, $file-formats: ttf);
+@include font-face("raleway", "../fonts/Raleway/Raleway-Italic", 400, italic, $file-formats: ttf);
+@include font-face("raleway", "../fonts/Raleway/Raleway-Light", 300, normal, $file-formats: ttf);
+@include font-face("raleway", "../fonts/Raleway/Raleway-LightItalic", 300, italic, $file-formats: ttf);
+@include font-face("raleway", "../fonts/Raleway/Raleway-ExtraLight", 200, normal, $file-formats: ttf);
+@include font-face("raleway", "../fonts/Raleway/Raleway-ExtraLightItalic", 200, italic, $file-formats: ttf);
+@include font-face("raleway", "../fonts/Raleway/Raleway-Thin", 100, normal, $file-formats: ttf);
+@include font-face("raleway", "../fonts/Raleway/Raleway-ThinItalic", 100, italic, $file-formats: ttf);
+
+@mixin Raleway {
+  font-family: 'raleway', 'sans-serif';
+}

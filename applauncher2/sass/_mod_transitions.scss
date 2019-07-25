@@ -1,0 +1,210 @@
+$tr-open-app-len: 0.5s;
+
+body {
+  transition: background-color 1s;
+}
+
+.logo {
+  transition-duration: $tr-open-app-len;
+  transition-property: top, height, opacity;
+  opacity: 1;
+  .logo-text-wrapper {
+    transition-duration: $tr-open-app-len;
+    transition-property: transform;
+  }
+  .logo-text {
+    transition-duration: $tr-open-app-len;
+    transition-property: line-height;
+  }
+}
+
+.appPane {
+  transition-duration: $tr-open-app-len * 2 / 3;
+  transition-property: max-height, top, bottom;
+  transition-delay: $tr-open-app-len / 3;
+}
+
+.appContainer {
+  opacity: 0;
+  transition: opacity 0.3s $tr-open-app-len;
+}
+
+.menu-main {
+  transition: opacity $tr-open-app-len / 3;
+}
+
+.menu-main-button {
+  transition-property: transform;
+  transition-duration: $tr-open-app-len / 2;
+  transform: scale(0);
+}
+
+.util-button-lang {
+  transition: opacity 0.5s, visibility 0s linear 0.5s;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.util-button-info {
+  transition: opacity 0.5s, visibility 0s linear;
+}
+
+.info-text {
+  transition: opacity 0.5s, visibility 0s linear;
+}
+
+.overlay {
+  max-height: 0;
+  .overlay-background {
+    transition: opacity 0.5s $tr-open-app-len;
+    opacity: 0;
+  }
+  .overlay-container {
+    transition: opacity 0.5s $tr-open-app-len;
+    opacity: 0;
+  }
+}
+
+body.mode-menu {
+  .appPane {
+    max-height: 0;
+    top: 50vh;
+    bottom: 50vh;
+    opacity: 0;
+    transition-property: opacity;
+    transition-delay: 0s;
+  }
+
+  .logo {
+    .logo-text-wrapper {
+      transform: scale(1);
+    }
+  }
+
+  .util-button-lang {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s, visibility 0s linear 0s;
+  }
+
+  .info-text {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+body.mode-app {
+  background-color: darken($color-background, 15%);
+
+  .logo {
+    top: 2.5vh;
+    height: 5vh;
+    .logo-text-wrapper {
+      transform: scale(0.4);
+    }
+    .logo-text {
+      line-height: 4.5vh;
+    }
+  }
+
+  .menu-main {
+    opacity: 0;
+  }
+
+  .menu-main-button {
+    opacity: 0;
+  }
+
+  .appPane {
+    bottom: 10vh;
+    max-height: 80vh;
+    opacity: 1;
+  }
+
+  .appContainer {
+    display: block;
+  }
+
+  .info-text {
+    opacity: 0;
+  }
+
+  .util-button-close {
+    margin-top: 0;
+  }
+}
+
+body.mode-blank {
+  background-color: $color-black;
+
+  .logo {
+    top: 2.5vh;
+    height: 5vh;
+    opacity: 0;
+    .logo-text-wrapper {
+      transform: scale(0.4);
+    }
+    .logo-text {
+      line-height: 4.5vh;
+    }
+  }
+
+  .menu-main {
+    opacity: 0;
+  }
+
+  .appPane {
+    top: 0vh;
+    bottom: 0vh;
+    max-height: 100vh;
+    opacity: 1;
+  }
+
+  .appContainer {
+    display: block;
+  }
+
+  .info-text {
+    opacity: 0;
+  }
+}
+
+body.app-visible {
+  .appContainer {
+    opacity: 1;
+  }
+}
+
+body.mode-menu {
+  .menu-main-button {
+    transform: scale(1);
+  }
+  @for $j from 0 through 2 {
+    .menu-main-row:nth-child(#{$j + 1}) {
+      @for $i from 1 through 6 {
+        .menu-main-button:nth-child(#{$i}) {
+          transition-delay: 0.3s * $j + 0.05s * $i;
+        }
+      }
+    }
+  }
+}
+
+body.overlay-visible {
+  .overlay {
+    max-height: 80vh;
+    .overlay-background {
+      opacity: 1;
+    }
+    .overlay-container {
+      opacity: 1;
+    }
+  }
+
+  .util-button-info {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+
+}
