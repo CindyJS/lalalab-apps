@@ -3,7 +3,9 @@
 A collection of exhibit-ready [CindyJS](https://cindyjs.org/) applications made for the [Lalalab exhbition](https://lalalab.imaginary.org).
 These applets are supposed to be served through the [applauncher2 of IMAGINARY](https://github.com/IMAGINARY/applauncher2).
 
-This repository contains the exhibits of two collections: [ShowMeMusic](http://science-to-touch.com/LaLaLab/ShowMeMusic/) and [BeatBox](http://science-to-touch.com/LaLaLab/BeatBox/).
+They can be launched at [https://cindyjs.github.io/lalalab-apps/](https://cindyjs.github.io/lalalab-apps/).
+
+This repository contains the exhibits of two collections: [ShowMeMusic](https://cindyjs.github.io/lalalab-apps/applauncher2/?cfg=showmemusic) and [BeatBox](https://cindyjs.github.io/lalalab-apps/applauncher2/?cfg=beatbox).
 
 ![Screenshot of ShowMeMusic](SMM.png)
 ![Screenshot of BeatBox](BB.png)
