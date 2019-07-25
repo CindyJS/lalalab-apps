@@ -1,0 +1,20 @@
+{
+  "extends": ["airbnb"],
+  "installedESLint": true,
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+    }
+  },
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jquery": true
+  },
+  "globals": {
+  },
+  "rules": {
+    "no-console": [2, {"allow": ["warn", "error"]}]
+  }
+}
