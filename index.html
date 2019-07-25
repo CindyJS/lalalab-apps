@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+
+  <title>CindyJS Music apps</title>
+  <style type="text/css">
+    * {
+      margin: 0px;
+      padding: 0px;
+      background-color: #222222;
+
+    }
+
+    #container {
+      width: 100vw;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+    }
+
+    img {
+      max-width: 45vw;
+      max-height: 80vh;
+    }
+
+    img:hover {
+      filter: grayscale(20%);
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="container">
+    <div>
+      <a href="applauncher2/?cfg=beatbox"><img src="BB.png"></a>
+    </div>
+    <div>
+      <a href="applauncher2/?cfg=showmemusic"><img src="SMM.png"></a>
+    </div>
+  </div>
+
+</body>
+
+</html>
