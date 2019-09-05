@@ -257,7 +257,7 @@ through=false;
 
   if(mouse().y<selbox_1_2+8.7, selt=selt+floor(1+.9*(selbox_1_2+8.7-mouse().y));selt=min(length(tunes)-1,selt));
   if(mouse().y>selbox_1_2+9.6, selt=selt-floor(1+.9*(-(selbox_1_2+9.6)+mouse().y));selt=max(0,selt));
- 
+
 
   if(selt!=selto,stop());
 
@@ -500,63 +500,6 @@ var cdy = CindyJS({
   csconsole: false,
   cinderella: {build: 1901, version: [2, 9, 1901]}
 });
-
-
-String.prototype.replaceAll = function(str1, str2, ignore)
-{
-    return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
-}
-
-
-    if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
-      document.querySelector("#FileDrop #Text").textContent = "Reading files not supported by this browser";
-    } else {
-
-      var fileDrop = document.querySelector("#FileDrop")
-
-      fileDrop.addEventListener("dragenter", function(){
-        fileDrop.classList.add("Hover");
-      })
-
-      fileDrop.addEventListener("dragleave", function(){
-        fileDrop.classList.remove("Hover");
-      });
-
-      fileDrop.addEventListener("drop", function(){
-        fileDrop.classList.remove("Hover");
-      });
-
-      document.querySelector("#FileDrop input").addEventListener("change", function(e){
-        //get the files
-        var files = e.target.files;
-        if (files.length > 0){
-          var file = files[0];
-          parseFile(file);
-        }
-      });
-    }
-
-
-    function parseFile(file){
-      //read the file
-      var reader = new FileReader();
-      reader.onload = function(e){
-
-        var partsData = MidiConvert.parse(e.target.result);
-       // console.log(JSON.stringify(partsData, undefined, 2));
-
-var str=JSON.stringify(partsData, undefined, 2);
-str= str.replaceAll("{", "[");
-str= str.replaceAll("}", "]");
-str= str.replaceAll(":", ",");
-//console.log(str);
-       cdy.evokeCS("readMidi("+str+");");
-       // document.querySelector("#ResultsText").value = JSON.stringify(partsData, undefined, 2);
-      };
-      reader.readAsBinaryString(file);
-    }
-
-
     </script>
 <body>
 
