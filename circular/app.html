@@ -95,7 +95,7 @@ positionpts=apply(1..12,
 );
 
 
-follower=(1,4,7,10);  
+follower=(1,4,7,10);
 //notenames=("$C$","$C\sharp$","$D$","$E\flat$","$E$","$F$","$F\sharp$","$G$","$G\sharp$","$A$","$B\flat$","$H$");
 notenames = tokenize(international("NOTES"), " ");
 tunename="NO TUNE YET";
@@ -285,7 +285,7 @@ colormap=apply(1..120,(1,.8,.4));
 
   );
 
-</script>  
+</script>
 
 <script id="csmousedown" type="text/x-cindyscript">
 
@@ -348,7 +348,7 @@ apply(highest,
      if(aroused_#>.4,
        current=current++[#];
     //   draw(gauss(exp(i*w)*16),gauss(exp(i*w)*16),size->30,color->(.6,.6,1),alpha->1);
-     );  
+     );
 );
 
 
@@ -392,7 +392,7 @@ apply(highest_[1,2,3],
      if(aroused_#>.4,
        current=current++[#];
     //   draw(gauss(exp(i*w)*16),gauss(exp(i*w)*16),size->30,color->(.6,.6,1),alpha->1);
-     );  
+     );
 );
 
 
@@ -472,7 +472,7 @@ if(actualnotes_#>0.01,si=10;al=1,si=0;al=0);
   if(!paused,
   aroused=aroused*(.30)^(dt*par2*2);
   lam=.000001^dt;
-  
+
 
 //drawtext((0,-18),lam,color->(1,1,1));
   aroused2=aroused2*(lam)+(1-lam)*aroused;
@@ -607,7 +607,7 @@ apply(9..96,i,
 
   var cdy = CindyJS({
     ports: [{
-      id: "CSCanvas",       
+      id: "CSCanvas",
       virtualwidth: 1920,
       virtualheight: 972,
       fill:"window",
@@ -641,62 +641,6 @@ apply(9..96,i,
     language: IMAGINARY.i18n.getLang(),
     translations: translations
   });
-
-String.prototype.replaceAll = function(str1, str2, ignore) 
-{
-    return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
-} 
-
-
-    if (!(window.File && window.FileReader && window.FileList && window.Blob)) {
-      document.querySelector("#FileDrop #Text").textContent = "Reading files not supported by this browser";
-    } else {
-
-      var fileDrop = document.querySelector("#FileDrop")
-
-      fileDrop.addEventListener("dragenter", function(){
-        fileDrop.classList.add("Hover");
-      })
-
-      fileDrop.addEventListener("dragleave", function(){
-        fileDrop.classList.remove("Hover");
-      });
-
-      fileDrop.addEventListener("drop", function(){
-        fileDrop.classList.remove("Hover");
-      });
-
-      document.querySelector("#FileDrop input").addEventListener("change", function(e){
-        //get the files
-        var files = e.target.files;
-        if (files.length > 0){
-          var file = files[0];
-          parseFile(file);
-        }
-      });
-    }
-
-
-    function parseFile(file){
-      //read the file
-      var reader = new FileReader();
-      reader.onload = function(e){
-        
-        var partsData = MidiConvert.parse(e.target.result);
-       // console.log(JSON.stringify(partsData, undefined, 2));
-
-var str=JSON.stringify(partsData, undefined, 2);
-str= str.replaceAll("{", "[");
-str= str.replaceAll("}", "]");
-str= str.replaceAll(":", ",");
-//console.log(str);
-       cdy.evokeCS("readMidi("+str+");");
-       // document.querySelector("#ResultsText").value = JSON.stringify(partsData, undefined, 2);
-      };
-      reader.readAsBinaryString(file);
-    }
-
-
 </script>
 </div>
 
